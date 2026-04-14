@@ -1,234 +1,408 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>InteraSaúde — Saúde inteligente para todos</title>
-  <meta name="description" content="Plataforma de saúde digital que une análise laboratorial com IA e farmácia digital."/>
-  <meta property="og:title" content="InteraSaúde"/>
-  <meta property="og:url" content="https://interasaude.com.br"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--teal:#167070;--teal-d:#0e4f4f;--teal-xl:#e6f4f4;--mint:#4dbdbd;--sand:#f7f3ee;--dark:#111c1c;--mid:#3d5555;--light:#8aacac;--white:#fff}
-    html{scroll-behavior:smooth}
-    body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--dark);overflow-x:hidden}
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;background:rgba(255,255,255,0.93);backdrop-filter:blur(16px);border-bottom:1px solid rgba(22,112,112,0.1)}
-    .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-    .logo-icon{width:34px;height:34px;background:var(--teal);border-radius:8px;display:flex;align-items:center;justify-content:center}
-    .logo-text{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--teal-d)}
-    .logo-text span{color:var(--mint)}
-    .nav-links{display:flex;gap:32px;list-style:none}
-    .nav-links a{text-decoration:none;color:var(--mid);font-size:.9rem;font-weight:500;transition:color .2s}
-    .nav-links a:hover{color:var(--teal)}
-    .nav-btn{background:var(--teal);color:var(--white);border:none;border-radius:8px;padding:10px 22px;font-size:.9rem;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s}
-    .nav-btn:hover{background:var(--teal-d);transform:translateY(-1px)}
-    .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:120px 60px 80px;gap:60px;background:linear-gradient(135deg,var(--white) 0%,var(--teal-xl) 100%);position:relative;overflow:hidden}
-    .hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(22,112,112,.12) 0%,transparent 70%);border-radius:50%}
-    .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(22,112,112,.1);color:var(--teal);border:1px solid rgba(22,112,112,.2);border-radius:100px;padding:6px 14px;font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:24px;animation:fadeUp .6s ease both}
-    .hero-badge::before{content:'';width:6px;height:6px;background:var(--mint);border-radius:50%;animation:pulse 2s infinite}
-    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.4)}}
-    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,5vw,3.8rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:22px;animation:fadeUp .6s .1s ease both}
-    .hero h1 em{font-style:normal;color:var(--teal);position:relative}
-    .hero h1 em::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--mint));border-radius:2px}
-    .hero p{font-size:1.05rem;line-height:1.7;color:var(--mid);max-width:480px;margin-bottom:38px;animation:fadeUp .6s .2s ease both}
-    .hero-btns{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp .6s .3s ease both}
-    .btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:var(--white);border:2px solid var(--teal);border-radius:10px;padding:13px 26px;font-size:.95rem;font-weight:600;text-decoration:none;transition:all .2s}
-    .btn-p:hover{background:var(--teal-d);border-color:var(--teal-d);transform:translateY(-2px);box-shadow:0 8px 24px rgba(22,112,112,.3)}
-    .btn-s{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--teal);border:2px solid rgba(22,112,112,.3);border-radius:10px;padding:13px 26px;font-size:.95rem;font-weight:600;text-decoration:none;transition:all .2s}
-    .btn-s:hover{border-color:var(--teal);background:rgba(22,112,112,.06);transform:translateY(-2px)}
-    .hero-visual{display:flex;justify-content:center;align-items:center;animation:fadeIn .8s .3s ease both}
-    .hcard{background:var(--white);border-radius:20px;padding:26px;box-shadow:0 20px 60px rgba(22,112,112,.15),0 4px 16px rgba(0,0,0,.06);border:1px solid rgba(22,112,112,.1);position:relative;z-index:3}
-    .hcard-wrap{position:relative;width:100%;max-width:420px}
-    .hfloat{position:absolute;background:var(--white);border-radius:14px;padding:14px 18px;box-shadow:0 12px 40px rgba(0,0,0,.12);border:1px solid rgba(22,112,112,.08);z-index:4}
-    .hf1{bottom:-22px;right:-22px}.hf2{top:-18px;left:-18px}
-    .cicon{width:44px;height:44px;background:var(--teal-xl);border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
-    .cicon svg{width:22px;height:22px;color:var(--teal)}
-    .ct{font-weight:700;font-size:.95rem;margin-bottom:3px}
-    .cs{font-size:.78rem;color:var(--light)}
-    .cbar{display:flex;align-items:center;gap:9px;margin-top:14px}
-    .bar{flex:1;height:5px;background:var(--teal-xl);border-radius:3px;overflow:hidden}
-    .fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--mint));border-radius:3px;animation:fill 1.5s .8s ease both}
-    @keyframes fill{from{width:0}}
-    .bv{font-size:.76rem;font-weight:700;color:var(--teal);white-space:nowrap}
-    .fl{font-size:.72rem;font-weight:600;color:var(--mid);margin-bottom:3px}
-    .fv{font-size:1.1rem;font-weight:700;color:var(--dark)}
-    .fu{font-size:.68rem;color:var(--light)}
-    .ft{display:inline-flex;align-items:center;font-size:.72rem;font-weight:600;color:#22c55e;background:rgba(34,197,94,.1);padding:2px 7px;border-radius:100px;margin-top:3px}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-    section{padding:90px 60px}
-    .slabel{display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
-    .stitle{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,4vw,2.6rem);font-weight:700;line-height:1.15;color:var(--dark);letter-spacing:-.02em;margin-bottom:18px}
-    .sdesc{font-size:1rem;line-height:1.7;color:var(--mid);max-width:540px}
-    .products{background:var(--sand)}
-    .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:56px}
-    .pcard{background:var(--white);border-radius:22px;padding:44px;border:1px solid rgba(22,112,112,.08);transition:all .3s;position:relative;overflow:hidden}
-    .pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--mint));opacity:0;transition:opacity .3s}
-    .pcard:hover{transform:translateY(-5px);box-shadow:0 20px 56px rgba(22,112,112,.12);border-color:rgba(22,112,112,.15)}
-    .pcard:hover::before{opacity:1}
-    .picon{width:58px;height:58px;background:var(--teal-xl);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:24px}
-    .picon svg{width:28px;height:28px;color:var(--teal)}
-    .pname{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--dark);margin-bottom:10px}
-    .pdesc{font-size:.92rem;line-height:1.7;color:var(--mid);margin-bottom:28px}
-    .pfeat{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:32px}
-    .pfeat li{display:flex;align-items:center;gap:9px;font-size:.85rem;color:var(--mid)}
-    .pfeat li::before{content:'';width:16px;height:16px;flex-shrink:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23167070'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E") center/contain no-repeat}
-    .plink{display:inline-flex;align-items:center;gap:7px;color:var(--teal);font-weight:600;font-size:.9rem;text-decoration:none;transition:gap .2s}
-    .plink:hover{gap:11px}
-    .plink svg{width:16px;height:16px}
-    .how{background:var(--white)}
-    .hgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:60px}
-    .hstep{text-align:center;padding:36px 28px;border-radius:18px;border:1px solid rgba(22,112,112,.08);transition:all .3s}
-    .hstep:hover{background:var(--teal-xl);border-color:rgba(22,112,112,.2)}
-    .snum{width:48px;height:48px;background:var(--teal);color:var(--white);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin:0 auto 18px}
-    .stit{font-weight:700;font-size:1rem;margin-bottom:9px;color:var(--dark)}
-    .sdsc{font-size:.85rem;line-height:1.65;color:var(--mid)}
-    .stats{background:var(--teal-d);display:grid;grid-template-columns:repeat(4,1fr)}
-    .si{padding:56px 36px;text-align:center;border-right:1px solid rgba(255,255,255,.1)}
-    .si:last-child{border-right:none}
-    .sn{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:7px}
-    .sn span{color:var(--mint)}
-    .sl{font-size:.85rem;color:rgba(255,255,255,.6);font-weight:500}
-    .cta{background:var(--sand);text-align:center;padding:110px 60px}
-    .cta .stitle{max-width:580px;margin:0 auto 18px}
-    .cta .sdesc{margin:0 auto 44px;text-align:center}
-    .ctabtns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-    footer{background:var(--dark);padding:56px 60px}
-    .fi{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:22px}
-    .flogo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white)}
-    .flogo span{color:var(--mint)}
-    .fcopy{font-size:.8rem;color:rgba(255,255,255,.4)}
-    .flinks{display:flex;gap:22px}
-    .flinks a{font-size:.82rem;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
-    .flinks a:hover{color:var(--mint)}
-    @media(max-width:900px){
-      nav{padding:15px 22px}.nav-links{display:none}
-      .hero{grid-template-columns:1fr;padding:96px 22px 56px;gap:40px}.hero-visual{display:none}
-      section{padding:64px 22px}.pgrid{grid-template-columns:1fr}.hgrid{grid-template-columns:1fr}
-      .stats{grid-template-columns:1fr 1fr}.si{border-right:none;border-bottom:1px solid rgba(255,255,255,.1)}
-      .cta{padding:72px 22px}footer{padding:36px 22px}.fi{flex-direction:column;text-align:center}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InteraSaúde — Saúde digital inteligente para todos</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #1a7a4a;
+    --verde-claro: #2ecc71;
+    --verde-escuro: #0f4a2e;
+    --creme: #f5f0e8;
+    --dourado: #c8a84b;
+    --dourado-claro: #e8c96a;
+    --cinza-escuro: #1c1c1c;
+    --cinza-medio: #3d3d3d;
+    --branco: #fafaf8;
+    --accent: #e8f5ee;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--creme); color: var(--cinza-escuro); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(245,240,232,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,168,75,0.3); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .nav-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.4rem; color: var(--verde-escuro); letter-spacing: -0.5px; }
+  .nav-logo span { color: var(--dourado); }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 0.78rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cinza-medio); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--verde); }
+  .nav-cta-links { display: flex; gap: 12px; align-items: center; }
+  .nav-btn-primary { background: var(--verde); color: var(--branco); font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 20px; border-radius: 2px; text-decoration: none; transition: background 0.2s; }
+  .nav-btn-primary:hover { background: var(--verde-escuro); }
+  .nav-btn-secondary { background: transparent; color: var(--dourado); border: 1px solid var(--dourado); font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 9px 18px; border-radius: 2px; text-decoration: none; transition: all 0.2s; }
+  .nav-btn-secondary:hover { background: var(--dourado); color: var(--verde-escuro); }
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+  .hero-left { background: var(--verde-escuro); display: flex; flex-direction: column; justify-content: center; padding: 120px 60px 80px; position: relative; z-index: 1; }
+  .hero-left::after { content: ''; position: absolute; right: -60px; top: 0; bottom: 0; width: 120px; background: var(--verde-escuro); clip-path: polygon(0 0, 0 100%, 100% 100%); z-index: 2; }
+  .hero-tag { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--dourado); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+  .hero-tag::before { content: ''; width: 32px; height: 1px; background: var(--dourado); }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 5vw, 5rem); font-weight: 900; line-height: 1.05; color: var(--branco); margin-bottom: 8px; }
+  .hero-title em { font-style: italic; color: var(--dourado-claro); }
+  .hero-subtitle { font-size: 1.05rem; color: rgba(255,255,255,0.65); max-width: 400px; margin-top: 20px; margin-bottom: 48px; }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-cta { display: inline-flex; align-items: center; gap: 12px; background: var(--dourado); color: var(--verde-escuro); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; padding: 16px 32px; border-radius: 2px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+  .hero-cta:hover { background: var(--dourado-claro); transform: translateY(-2px); }
+  .hero-cta-ghost { display: inline-flex; align-items: center; gap: 12px; background: transparent; color: var(--dourado); border: 2px solid var(--dourado); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; padding: 14px 28px; border-radius: 2px; text-decoration: none; transition: all 0.2s; }
+  .hero-cta-ghost:hover { background: rgba(200,168,75,0.15); transform: translateY(-2px); }
+  .hero-right { background: var(--branco); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 120px 60px 80px 100px; position: relative; }
+  .hero-visual { position: relative; width: 100%; max-width: 380px; }
+  .circle-big { width: 320px; height: 320px; border-radius: 50%; background: linear-gradient(135deg, var(--accent) 0%, rgba(200,168,75,0.15) 100%); border: 2px solid rgba(200,168,75,0.3); display: flex; align-items: center; justify-content: center; position: relative; margin: 0 auto; animation: pulse 4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+  .circle-icon { font-size: 5rem; }
+  .stat-card { position: absolute; background: white; border-left: 3px solid var(--dourado); padding: 12px 18px; border-radius: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); min-width: 140px; }
+  .stat-card:nth-child(2) { top: 20px; right: -20px; }
+  .stat-card:nth-child(3) { bottom: 30px; left: -30px; }
+  .stat-card:nth-child(4) { top: 50%; right: -40px; transform: translateY(-50%); }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: var(--verde); }
+  .stat-lbl { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.5px; color: var(--cinza-medio); text-transform: uppercase; }
+  section { padding: 100px 60px; max-width: 1200px; margin: 0 auto; }
+  .section-tag { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase; color: var(--dourado); margin-bottom: 12px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; line-height: 1.1; color: var(--cinza-escuro); margin-bottom: 20px; }
+  .section-lead { font-size: 1rem; color: var(--cinza-medio); max-width: 600px; margin-bottom: 60px; }
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .intro-text p { margin-bottom: 20px; color: var(--cinza-medio); }
+  .intro-box { background: var(--verde-escuro); color: var(--branco); padding: 48px; border-radius: 4px; }
+  .ib-icon { font-size: 3rem; margin-bottom: 20px; }
+  .intro-box h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; margin-bottom: 16px; color: var(--dourado-claro); }
+  .intro-box p { font-size: 0.95rem; color: rgba(255,255,255,0.7); }
+  .objetivo-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; align-items: start; }
+  .obj-list { display: flex; flex-direction: column; gap: 16px; }
+  .obj-item { display: flex; gap: 16px; padding: 20px; border: 1px solid rgba(200,168,75,0.2); border-radius: 4px; }
+  .obj-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .obj-item h4 { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
+  .obj-item p { font-size: 0.85rem; color: var(--cinza-medio); }
+  .objetivo-box { background: var(--verde-escuro); padding: 40px; border-radius: 4px; color: var(--branco); }
+  .objetivo-box h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: var(--dourado-claro); margin-bottom: 20px; }
+  .objetivo-box p { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 16px; }
+  .bg-branco { background: var(--branco); }
+  .metodo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .metodo-card { background: var(--creme); padding: 32px 24px; border-radius: 4px; border-top: 3px solid var(--dourado); }
+  .mc-num { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--dourado); letter-spacing: 2px; margin-bottom: 16px; }
+  .mc-icon { font-size: 2rem; margin-bottom: 16px; }
+  .metodo-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
+  .metodo-card p { font-size: 0.85rem; color: var(--cinza-medio); }
+  .servicos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .servico-card { background: var(--branco); border: 1px solid rgba(26,122,74,0.15); padding: 36px 28px; border-radius: 4px; transition: all 0.3s; }
+  .servico-card:hover { border-color: var(--verde); box-shadow: 0 8px 32px rgba(26,122,74,0.1); transform: translateY(-4px); }
+  .sc-icon-wrap { width: 56px; height: 56px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 1.6rem; }
+  .servico-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+  .sc-content p { font-size: 0.85rem; color: var(--cinza-medio); }
+  .ciclo-bg { background: var(--verde-escuro); }
+  .ciclo-section { max-width: 1200px; margin: 0 auto; padding: 100px 60px; }
+  .ciclo-section .section-tag { color: var(--dourado); }
+  .ciclo-section .section-title { color: var(--branco); }
+  .ciclo-section .section-lead { color: rgba(255,255,255,0.65); }
+  .ciclo-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; }
+  .ciclo-step { padding: 32px 20px; border-right: 1px solid rgba(255,255,255,0.1); text-align: center; position: relative; }
+  .ciclo-step:last-child { border-right: none; }
+  .ciclo-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: rgba(200,168,75,0.3); margin-bottom: 12px; }
+  .ciclo-icon { font-size: 2rem; margin-bottom: 12px; }
+  .ciclo-step h4 { font-size: 0.85rem; font-weight: 700; color: var(--dourado-claro); margin-bottom: 8px; letter-spacing: 0.5px; }
+  .ciclo-step p { font-size: 0.78rem; color: rgba(255,255,255,0.55); }
+  .publico-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .publico-card { padding: 36px 28px; border: 1px solid rgba(200,168,75,0.2); border-radius: 4px; transition: all 0.3s; }
+  .publico-card:hover { border-color: var(--dourado); background: rgba(200,168,75,0.05); }
+  .pc-icon { font-size: 2.5rem; margin-bottom: 20px; }
+  .publico-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+  .publico-card p { font-size: 0.85rem; color: var(--cinza-medio); margin-bottom: 16px; }
+  .pc-tag { display: inline-block; background: var(--accent); color: var(--verde); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 2px; }
+  .mkt-bg { background: var(--creme); }
+  .mkt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .mkt-card { background: var(--branco); padding: 32px 24px; border-radius: 4px; }
+  .mc-icon { font-size: 1.8rem; margin-bottom: 16px; }
+  .mkt-card h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
+  .mkt-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .mkt-card li { font-size: 0.82rem; color: var(--cinza-medio); padding-left: 14px; position: relative; }
+  .mkt-card li::before { content: '–'; position: absolute; left: 0; color: var(--dourado); }
+  .resultados-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .resultado-item { padding: 32px 24px; border: 1px solid rgba(26,122,74,0.12); border-radius: 4px; }
+  .ri-icon { font-size: 2rem; margin-bottom: 16px; }
+  .resultado-item h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+  .resultado-item p { font-size: 0.85rem; color: var(--cinza-medio); }
+  .final-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 60px; align-items: center; }
+  .final-text p { color: var(--cinza-medio); margin-bottom: 20px; }
+  .final-box { background: var(--verde-escuro); padding: 48px; border-radius: 4px; text-align: center; }
+  .fb-icon { font-size: 3rem; margin-bottom: 20px; }
+  .final-box h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--dourado-claro); margin-bottom: 16px; line-height: 1.2; }
+  .final-box p { font-size: 0.88rem; color: rgba(255,255,255,0.65); margin-bottom: 24px; }
+  .ods-badge { display: inline-block; background: rgba(200,168,75,0.2); color: var(--dourado-claro); font-size: 0.78rem; font-weight: 700; padding: 8px 16px; border-radius: 2px; border: 1px solid rgba(200,168,75,0.3); }
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(200,168,75,0.3), transparent); }
+  .valor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .valor-text p { color: var(--cinza-medio); margin-bottom: 20px; }
+  .diferencial-list { display: flex; flex-direction: column; gap: 20px; }
+  .dif-item { display: flex; gap: 16px; }
+  .dif-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+  .dif-item h4 { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+  .dif-item p { font-size: 0.82rem; color: var(--cinza-medio); }
+  footer { background: var(--cinza-escuro); padding: 32px 60px; text-align: center; font-size: 0.78rem; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
+  footer span { color: var(--dourado); font-weight: 700; }
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 100px 24px 60px; }
+    .hero-left::after { display: none; }
+    section { padding: 64px 24px; }
+    .intro-grid, .objetivo-grid, .final-grid, .valor-grid { grid-template-columns: 1fr; }
+    .metodo-grid { grid-template-columns: 1fr 1fr; }
+    .servicos-grid { grid-template-columns: 1fr; }
+    .ciclo-grid { grid-template-columns: 1fr 1fr; }
+    .publico-grid { grid-template-columns: 1fr; }
+    .mkt-grid { grid-template-columns: 1fr; }
+    .resultados-grid { grid-template-columns: 1fr; }
+    .produtos-grid { grid-template-columns: 1fr !important; }
+    footer { padding: 24px; }
+  }
+</style>
 </head>
 <body>
+
 <nav>
-  <a href="#" class="logo">
-    <div class="logo-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2v16M2 10h16" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="10" cy="10" r="8" stroke="white" stroke-width="1.5" fill="none" opacity="0.5"/></svg></div>
-    <span class="logo-text">Intera<span>Saúde</span></span>
-  </a>
-  <ul class="nav-links"><li><a href="#produtos">Produtos</a></li><li><a href="#como-funciona">Como funciona</a></li></ul>
-  <a href="https://www.interaanalises.com.br" target="_blank" class="nav-btn">Acessar plataforma</a>
+  <div class="nav-logo">Intera<span>Saúde</span></div>
+  <ul class="nav-links">
+    <li><a href="#introducao">Introdução</a></li>
+    <li><a href="#objetivo">Objetivo</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#marketing">Marketing</a></li>
+    <li><a href="#final">Conclusão</a></li>
+  </ul>
+  <div class="nav-cta-links">
+    <a href="https://www.interaanalises.com.br" target="_blank" class="nav-btn-primary">InteraAnalises ↗</a>
+    <a href="#produtos" class="nav-btn-secondary">FarmApp ↗</a>
+  </div>
 </nav>
 
-<section class="hero">
-  <div class="hero-content" style="position:relative;z-index:2">
-    <div class="hero-badge">✦ Saúde Digital Inteligente</div>
-    <h1>Cuide da sua saúde com <em>inteligência</em></h1>
-    <p>A InteraSaúde conecta você com análises laboratoriais por IA e farmácia digital — tudo em uma só plataforma feita para simplificar seu cuidado.</p>
+<div class="hero" id="topo">
+  <div class="hero-left">
+    <div class="hero-tag">Saúde Digital Inteligente · 2026</div>
+    <h1 class="hero-title">Intera<em>Saúde</em></h1>
+    <p class="hero-subtitle">Uma plataforma de saúde digital que une análise laboratorial com IA, cuidado farmacêutico e tecnologia para democratizar o acesso à saúde no Brasil.</p>
     <div class="hero-btns">
-      <a href="https://www.interaanalises.com.br" target="_blank" class="btn-p">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:17px;height:17px"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2"/></svg>
-        InteraAnalises
-      </a>
-      <a href="#farmapp" class="btn-s">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:17px;height:17px"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
-        Baixar FarmApp
-      </a>
+      <a href="https://www.interaanalises.com.br" target="_blank" class="hero-cta">Acessar InteraAnalises →</a>
+      <a href="#produtos" class="hero-cta-ghost">Baixar FarmApp →</a>
     </div>
   </div>
-  <div class="hero-visual">
-    <div class="hcard-wrap">
-      <div class="hcard">
-        <div class="cicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M12 12l2 2 4-4"/></svg></div>
-        <div class="ct">Análise de exames com IA</div>
-        <div class="cs">Interpretação personalizada em segundos</div>
-        <div class="cbar"><div class="bar"><div class="fill" style="width:87%"></div></div><div class="bv">87% precisão</div></div>
-        <div class="cbar" style="margin-top:7px"><div class="bar"><div class="fill" style="width:94%;animation-delay:.3s"></div></div><div class="bv">94% satisfação</div></div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="circle-big">
+        <span class="circle-icon">🩺</span>
+        <div class="stat-card">
+          <div class="stat-num">IA</div>
+          <div class="stat-lbl">Gemini 2.5</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">24/7</div>
+          <div class="stat-lbl">Disponível</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">100%</div>
+          <div class="stat-lbl">Digital</div>
+        </div>
       </div>
-      <div class="hfloat hf1"><div class="fl">Hemoglobina</div><div class="fv">14.2 <span class="fu">g/dL</span></div><div class="ft">↑ Normal</div></div>
-      <div class="hfloat hf2"><div class="fl">FarmApp</div><div class="fv" style="font-size:.9rem">📦 Farmácia digital</div></div>
     </div>
   </div>
-</section>
-
-<section class="products" id="produtos">
-  <div style="text-align:center;max-width:580px;margin:0 auto">
-    <span class="slabel">Nossos produtos</span>
-    <h2 class="stitle">Duas soluções, um ecossistema</h2>
-    <p class="sdesc">Desenvolvemos ferramentas que colocam a tecnologia a serviço da sua saúde.</p>
-  </div>
-  <div class="pgrid">
-    <div class="pcard">
-      <div class="picon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2M12 12l2 2 4-4"/></svg></div>
-      <div class="pname">InteraAnalises</div>
-      <p class="pdesc">Plataforma web que analisa seus exames laboratoriais com inteligência artificial, sugere especialistas próximos e guarda seu histórico de saúde.</p>
-      <ul class="pfeat">
-        <li>Análise de exames por IA Gemini</li>
-        <li>Histórico completo de consultas</li>
-        <li>Especialistas próximos no mapa</li>
-        <li>Perfis para pacientes e profissionais</li>
-        <li>Seguro e confidencial</li>
-      </ul>
-      <a href="https://www.interaanalises.com.br" target="_blank" class="plink">Acessar plataforma <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-    </div>
-    <div class="pcard" id="farmapp">
-      <div class="picon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01M8 6h8M8 10h8M8 14h4"/></svg></div>
-      <div class="pname">FarmApp</div>
-      <p class="pdesc">Aplicativo móvel de telefarmácia que conecta você com farmacêuticos, facilita a dispensação de medicamentos e oferece orientação farmacêutica.</p>
-      <ul class="pfeat">
-        <li>Teleconsulta farmacêutica</li>
-        <li>Histórico de medicamentos</li>
-        <li>Lembretes de posologia</li>
-        <li>Orientação de interações</li>
-        <li>Disponível para iOS e Android</li>
-      </ul>
-      <a href="#download" class="plink">Baixar o app <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-    </div>
-  </div>
-</section>
-
-<section class="how" id="como-funciona">
-  <div style="text-align:center;max-width:580px;margin:0 auto">
-    <span class="slabel">Simples assim</span>
-    <h2 class="stitle">Como funciona</h2>
-    <p class="sdesc">Em três passos você acessa análises de saúde com inteligência artificial.</p>
-  </div>
-  <div class="hgrid">
-    <div class="hstep"><div class="snum">1</div><div class="stit">Crie sua conta</div><p class="sdsc">Cadastre-se gratuitamente no InteraAnalises ou baixe o FarmApp. Configure seu perfil como paciente, acadêmico ou profissional de saúde.</p></div>
-    <div class="hstep"><div class="snum">2</div><div class="stit">Descreva seus sintomas</div><p class="sdsc">Informe seus sintomas, duração, histórico familiar e anexe seus exames laboratoriais. Nossa IA processa tudo com base em evidências científicas.</p></div>
-    <div class="hstep"><div class="snum">3</div><div class="stit">Receba sua análise</div><p class="sdsc">Em segundos você recebe uma análise personalizada com a especialidade indicada e os profissionais de saúde mais próximos de você.</p></div>
-  </div>
-</section>
-
-<div class="stats">
-  <div class="si"><div class="sn">2<span>+</span></div><div class="sl">Produtos ativos</div></div>
-  <div class="si"><div class="sn">IA<span>*</span></div><div class="sl">Gemini 2.5 Flash</div></div>
-  <div class="si"><div class="sn">100<span>%</span></div><div class="sl">Dados criptografados</div></div>
-  <div class="si"><div class="sn">24<span>h</span></div><div class="sl">Disponibilidade</div></div>
 </div>
 
-<section class="cta" id="download">
-  <span class="slabel">Comece agora</span>
-  <h2 class="stitle">Sua saúde merece tecnologia de ponta</h2>
-  <p class="sdesc">Acesse o InteraAnalises direto no navegador ou baixe o FarmApp e tenha um farmacêutico no bolso.</p>
-  <div class="ctabtns">
-    <a href="https://www.interaanalises.com.br" target="_blank" class="btn-p">Acessar InteraAnalises</a>
-    <a href="#" class="btn-s" onclick="alert('FarmApp em breve nas lojas! Em desenvolvimento.')">Baixar FarmApp</a>
+<!-- PRODUTOS -->
+<div style="background:var(--verde-escuro);padding:80px 60px" id="produtos">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--dourado);margin-bottom:16px">Nossos Produtos</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:900;color:var(--branco);margin-bottom:48px;line-height:1.1">Acesse agora<br><em style="font-style:italic;color:var(--dourado-claro)">nossa plataforma</em></h2>
+    <div class="produtos-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(200,168,75,0.3);border-radius:4px;padding:40px;transition:all .3s">
+        <div style="font-size:2.5rem;margin-bottom:20px">🔬</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--branco);margin-bottom:12px">InteraAnalises</h3>
+        <p style="color:rgba(255,255,255,0.65);font-size:0.95rem;line-height:1.7;margin-bottom:28px">Plataforma web que analisa seus exames laboratoriais com IA Gemini, sugere especialistas próximos, guarda histórico de consultas e oferece orientação personalizada para pacientes e profissionais de saúde.</p>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:32px">
+          <li style="color:rgba(255,255,255,0.65);font-size:0.85rem;display:flex;align-items:center;gap:8px"><span style="color:var(--dourado)">✓</span> Análise de exames com IA Gemini 2.5</li>
+          <li style="color:rgba(255,255,255,0.65);font-size:0.85rem;display:flex;align-items:center;gap:8px"><span style="color:var(--dourado)">✓</span> Histórico completo de consultas</li>
+          <li style="color:rgba(255,255,255,0.65);font-size:0.85rem;display:flex;align-items:center;gap:8px"><span style="color:var(--dourado)">✓</span> Especialistas próximos no mapa</li>
+          <li style="color:rgba(255,255,255,0.65);font-size:0.85rem;display:flex;align-items:center;gap:8px"><span style="color:var(--dourado)">✓</span> Perfis para pacientes e profissionais</li>
+        </ul>
+        <a href="https://www.interaanalises.com.br" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:var(--dourado);color:var(--verde-escuro);font-weight:700;font-size:0.85rem;letter-spacing:1px;text-transform:uppercase;padding:14px 28px;border-radius:2px;text-decoration:none;transition:background .2s">Acessar plataforma →</a>
+      </div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(200,168,75,0.3);border-radius:4px;padding:40px">
+        <div style="font-size:2.5rem;margin-bottom:20px">📱</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--branco);margin-bottom:12px">FarmApp</h3>
+        <p style="color:rgba(255,255,255,0.65);font-size:0.95rem;line-height:1.7;margin-bottom:28px">Aplicativo móvel de telefarmácia que conecta você diretamente com farmacêuticos clínicos, facilita o acompanhamento farmacoterapêutico, lembretes de posologia e orientação sobre interações medicamentosas.</p>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:32px">
+          <li style="color:rgba(255,255,255,0.65);font-size:0.85rem;display:flex;align-items:center;gap:8px"><span style="color:var(--dourado)">✓</span> Teleconsulta farmacêutica</li>
+          <li style="color:rgba(255,255,255,0.65);font-size:0.85rem;display:flex;align-items:center;gap:8px"><span style="color:var(--dourado)">✓</span> Histórico de medicamentos</li>
+          <li style="color:rgba(255,255,255,0.65);font-size:0.85rem;display:flex;align-items:center;gap:8px"><span style="color:var(--dourado)">✓</span> Lembretes de posologia</li>
+          <li style="color:rgba(255,255,255,0.65);font-size:0.85rem;display:flex;align-items:center;gap:8px"><span style="color:var(--dourado)">✓</span> Disponível para iOS e Android</li>
+        </ul>
+        <a href="#" onclick="alert('FarmApp em breve nas lojas! Em desenvolvimento.')" style="display:inline-flex;align-items:center;gap:10px;background:transparent;border:2px solid var(--dourado);color:var(--dourado);font-weight:700;font-size:0.85rem;letter-spacing:1px;text-transform:uppercase;padding:12px 28px;border-radius:2px;text-decoration:none;transition:all .2s;cursor:pointer">Em breve nas lojas →</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- INTRODUCAO -->
+<section id="introducao" class="fade-in">
+  <div class="section-tag">01 — Introdução</div>
+  <h2 class="section-title">O que a<br>InteraSaúde propõe</h2>
+  <div class="intro-grid">
+    <div class="intro-text">
+      <p>A InteraSaúde nasce para preencher a lacuna entre o conhecimento técnico-científico farmacêutico e o usuário final, oferecendo respostas acessíveis, didáticas e seguras sobre sinais clínicos, exames laboratoriais, uso racional de medicamentos e medidas preventivas.</p>
+      <p>O projeto integra tecnologia de inteligência artificial com supervisão de farmacêuticos clínicos especializados, criando uma plataforma única que combina análise laboratorial, cuidado farmacêutico e educação em saúde.</p>
+      <p>Ao democratizar o acesso ao farmacêutico clínico — antes restrito a hospitais e grandes centros urbanos — a InteraSaúde leva cuidado especializado para qualquer pessoa com smartphone, em qualquer município do Brasil.</p>
+    </div>
+    <div class="intro-box">
+      <div class="ib-icon">🌿</div>
+      <h3>Missão</h3>
+      <p>Democratizar o acesso ao cuidado farmacêutico clínico de qualidade, integrando tecnologia e humanização para promover saúde, autonomia e qualidade de vida para todos os brasileiros.</p>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- OBJETIVO -->
+<section class="bg-branco" id="objetivo">
+  <div style="max-width:1200px;margin:0 auto" class="fade-in">
+    <div class="section-tag">02 — Objetivo</div>
+    <h2 class="section-title">Objetivos<br>estratégicos</h2>
+    <p class="section-lead">A InteraSaúde foi criada com propósito claro: transformar o acesso à saúde por meio de tecnologia e cuidado farmacêutico.</p>
+    <div class="objetivo-grid">
+      <div class="obj-list">
+        <div class="obj-item"><div class="obj-icon">🎯</div><div><h4>Assistência Farmacêutica Digital</h4><p>Oferecer orientação farmacêutica acessível, segura e baseada em evidências para pacientes em todo o Brasil via plataforma digital.</p></div></div>
+        <div class="obj-item"><div class="obj-icon">🔬</div><div><h4>Análise Laboratorial com IA</h4><p>Interpretar exames laboratoriais com inteligência artificial, fornecendo análises personalizadas e identificando padrões clínicos relevantes.</p></div></div>
+        <div class="obj-item"><div class="obj-icon">📚</div><div><h4>Educação em Saúde</h4><p>Desenvolver conteúdo educativo de qualidade que capacite pacientes e estudantes a compreenderem sua saúde com autonomia.</p></div></div>
+        <div class="obj-item"><div class="obj-icon">🤝</div><div><h4>Integração com Profissionais</h4><p>Criar pontes entre pacientes e profissionais de saúde, facilitando o encaminhamento e a continuidade do cuidado.</p></div></div>
+      </div>
+      <div class="objetivo-box">
+        <h3>Visão de Futuro</h3>
+        <p>Ser a principal referência em cuidado farmacêutico digital no Brasil, reconhecida pela qualidade científica, acessibilidade e impacto real na saúde da população.</p>
+        <p>Expandir para o mercado B2B com clínicas, hospitais e seguradoras, criando um ecossistema completo de saúde digital.</p>
+        <p>Contribuir ativamente para os Objetivos de Desenvolvimento Sustentável, especialmente o ODS 3 — Saúde e Bem-Estar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- SERVIÇOS -->
+<section id="servicos" class="fade-in">
+  <div class="section-tag">03 — Serviços</div>
+  <h2 class="section-title">Nossos serviços</h2>
+  <p class="section-lead">A InteraSaúde oferece um conjunto integrado de serviços que cobrem todas as etapas do cuidado em saúde.</p>
+  <div class="servicos-grid">
+    <div class="servico-card"><div class="sc-icon-wrap">🔬</div><div class="sc-content"><h3>Análise de Exames por IA</h3><p>Interpretação automatizada de exames laboratoriais com IA Gemini 2.5, fornecendo análises personalizadas baseadas no perfil do usuário e evidências científicas.</p></div></div>
+    <div class="servico-card"><div class="sc-icon-wrap">👨‍⚕️</div><div class="sc-content"><h3>Teleconsulta Farmacêutica</h3><p>Atendimento por videochamada com farmacêutico clínico para revisão da farmacoterapia, identificação de problemas relacionados a medicamentos e elaboração do plano de cuidado.</p></div></div>
+    <div class="servico-card"><div class="sc-icon-wrap">📊</div><div class="sc-content"><h3>Seguimento Farmacoterapêutico</h3><p>Acompanhamento longitudinal de pacientes crônicos com monitoramento de indicadores clínicos, ajuste de metas e relatórios de evolução terapêutica.</p></div></div>
+    <div class="servico-card"><div class="sc-icon-wrap">💊</div><div class="sc-content"><h3>Orientação de Medicamentos</h3><p>Informações detalhadas sobre uso correto, interações, efeitos adversos e contraindicações dos medicamentos prescritos.</p></div></div>
+    <div class="servico-card"><div class="sc-icon-wrap">📍</div><div class="sc-content"><h3>Especialistas Próximos</h3><p>Localização de médicos e especialistas próximos ao paciente via Google Maps, com avaliações e informações de contato.</p></div></div>
+    <div class="servico-card"><div class="sc-icon-wrap">📱</div><div class="sc-content"><h3>App Farmacêutico (FarmApp)</h3><p>Aplicativo móvel de telefarmácia com lembretes de posologia, histórico de medicamentos e acesso rápido ao farmacêutico clínico.</p></div></div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PÚBLICO -->
+<section class="bg-branco fade-in">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-tag">04 — Público-Alvo</div>
+    <h2 class="section-title">Para quem a<br>InteraSaúde foi criada</h2>
+    <p class="section-lead">A plataforma atende a diferentes perfis de usuários, adaptando linguagem e funcionalidades para cada necessidade.</p>
+    <div class="publico-grid">
+      <div class="publico-card"><div class="pc-icon">👤</div><h3>Paciente Leigo</h3><p>Pessoas que buscam compreender seus exames, sintomas e medicamentos de forma simples, segura e confiável, sem precisar de formação técnica.</p><span class="pc-tag">Linguagem acessível</span></div>
+      <div class="publico-card"><div class="pc-icon">🎓</div><h3>Estudante & Acadêmico</h3><p>Estudantes de farmácia, medicina e ciências da saúde que precisam de suporte científico para estudos, estágios e pesquisas clínicas.</p><span class="pc-tag">Linguagem técnica moderada</span></div>
+      <div class="publico-card"><div class="pc-icon">🩺</div><h3>Profissional de Saúde</h3><p>Farmacêuticos, médicos e enfermeiros que precisam de acesso rápido a informações clínicas, protocolos e suporte para tomada de decisão.</p><span class="pc-tag">Linguagem técnica completa</span></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- DIFERENCIAIS -->
+<section class="fade-in" id="diferenciais">
+  <div class="section-tag">05 — Diferenciais</div>
+  <h2 class="section-title">Por que a InteraSaúde<br>é diferente?</h2>
+  <p class="section-lead">Enquanto farmácias tradicionais se limitam à dispensação de medicamentos e plataformas de saúde oferecem apenas teleconsultas médicas, a InteraSaúde ocupa um espaço único.</p>
+  <div class="valor-grid">
+    <div class="valor-text">
+      <p>A integração completa entre o cuidado farmacêutico clínico, a análise de exames com IA, a educação em saúde e a tecnologia de localização de especialistas cria uma experiência única e abrangente.</p>
+      <p>Nossa proposta de valor está na continuidade do cuidado — acompanhamos o paciente antes, durante e após o tratamento, criando um vínculo terapêutico que resulta em maior adesão, melhores desfechos clínicos e redução de custos em saúde.</p>
+      <p>Democratizamos o acesso ao farmacêutico clínico — antes restrito a hospitais e grandes centros urbanos — levando cuidado especializado para qualquer pessoa com smartphone, em qualquer município do Brasil.</p>
+    </div>
+    <div class="diferencial-list">
+      <div class="dif-item"><div class="dif-icon">⚡</div><div><h4>Acesso Democratizado</h4><p>Cuidado farmacêutico especializado disponível 24/7 para qualquer brasileiro com smartphone.</p></div></div>
+      <div class="dif-item"><div class="dif-icon">🎯</div><div><h4>Personalização por IA + Humano</h4><p>Combinação única de inteligência artificial com supervisão de farmacêuticos clínicos especializados.</p></div></div>
+      <div class="dif-item"><div class="dif-icon">🔗</div><div><h4>Ecossistema Integrado</h4><p>Análise laboratorial + cuidado farmacêutico + educação em saúde em uma única plataforma.</p></div></div>
+      <div class="dif-item"><div class="dif-icon">📈</div><div><h4>Desfechos Mensuráveis</h4><p>Dashboard com métricas de saúde, relatórios clínicos e evidências de impacto real.</p></div></div>
+      <div class="dif-item"><div class="dif-icon">💡</div><div><h4>Modelo B2C + B2B</h4><p>Receita diversificada: assinaturas individuais + parcerias com clínicas, empresas e seguradoras.</p></div></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- MARKETING -->
+<div class="mkt-bg" id="marketing">
+  <section class="fade-in">
+    <div class="section-tag">06 — Estratégias de Marketing</div>
+    <h2 class="section-title">Marketing centrado<br>no paciente</h2>
+    <p class="section-lead">Estratégias que comunicam valor real, constroem confiança e ampliam o alcance da InteraSaúde de forma ética e científica.</p>
+    <div class="mkt-grid">
+      <div class="mkt-card"><div class="mc-icon">📱</div><h3>Marketing de Conteúdo & SEO</h3><ul><li>Blog com artigos farmacêuticos baseados em evidências</li><li>Vídeos educativos no YouTube e Instagram Reels</li><li>Podcasts sobre saúde e uso racional de medicamentos</li><li>SEO especializado para termos de saúde e farmácia</li><li>Newsletter semanal para pacientes e profissionais</li></ul></div>
+      <div class="mkt-card"><div class="mc-icon">🤝</div><h3>Marketing de Relacionamento</h3><ul><li>Programa de fidelidade para pacientes crônicos</li><li>Indicação remunerada: paciente que indica ganha desconto</li><li>Parcerias com médicos e nutricionistas (co-marketing)</li><li>Grupos de apoio online moderados por farmacêuticos</li><li>Atendimento humanizado como diferencial de marca</li></ul></div>
+      <div class="mkt-card"><div class="mc-icon">🎯</div><h3>Inbound & Growth Hacking</h3><ul><li>Freemium: 1 consulta gratuita para novos usuários</li><li>Calculadora de interações medicamentosas gratuita</li><li>Anúncios segmentados (Google Ads, Meta Ads)</li><li>Parcerias com apps de saúde (wearables, monitores)</li><li>Presença ativa em comunidades de saúde online</li></ul></div>
+      <div class="mkt-card"><div class="mc-icon">🏢</div><h3>Marketing B2B</h3><ul><li>Apresentações em congressos de farmácia e medicina</li><li>Materiais técnicos para médicos e gestores de saúde</li><li>Programa de parceria para clínicas e consultórios</li><li>Relatórios de impacto clínico como argumento de venda</li><li>LinkedIn como canal prioritário para decisores</li></ul></div>
+      <div class="mkt-card"><div class="mc-icon">⭐</div><h3>Prova Social & Autoridade</h3><ul><li>Depoimentos e casos de sucesso de pacientes</li><li>Publicações científicas sobre impacto do serviço</li><li>Selos de qualidade (CFF, CFM, ANVISA)</li><li>Parcerias com universidades e pesquisadores</li><li>Presença em mídia especializada em saúde</li></ul></div>
+      <div class="mkt-card"><div class="mc-icon">🌱</div><h3>Marketing Social & ODS</h3><ul><li>Campanhas alinhadas ao ODS 3 (Saúde e Bem-Estar)</li><li>Projeto de acesso gratuito para comunidades carentes</li><li>Relatório ESG anual com impacto social mensurado</li><li>Participação em campanhas nacionais de saúde</li><li>Engajamento com influenciadores de saúde responsável</li></ul></div>
+    </div>
+  </section>
+</div>
+<div class="divider"></div>
+
+<!-- RESULTADOS -->
+<section class="fade-in">
+  <div class="section-tag">07 — Resultados Esperados</div>
+  <h2 class="section-title">Impacto esperado<br>em três dimensões</h2>
+  <p class="section-lead">Espera-se que a InteraSaúde gere impacto mensurável para os pacientes, para o sistema de saúde e para o mercado farmacêutico.</p>
+  <div class="resultados-grid">
+    <div class="resultado-item"><div class="ri-icon">👤</div><h3>Para o Paciente</h3><p>Maior autonomia na compreensão de informações de saúde, melhor adesão terapêutica, redução de eventos adversos, melhora em indicadores clínicos e maior qualidade de vida documentada.</p></div>
+    <div class="resultado-item"><div class="ri-icon">🏥</div><h3>Para o Sistema de Saúde</h3><p>Redução de hospitalizações evitáveis por problemas relacionados a medicamentos, desafogamento de serviços de urgência e qualificação de profissionais por meio de casos simulados interativos.</p></div>
+    <div class="resultado-item"><div class="ri-icon">💼</div><h3>Para o Negócio</h3><p>Crescimento escalável via modelo SaaS + assinatura, expansão para mercado B2B com clínicas e seguradoras, e posicionamento como referência em cuidado farmacêutico digital no Brasil.</p></div>
+    <div class="resultado-item"><div class="ri-icon">🎓</div><h3>Para a Educação</h3><p>Plataforma de casos clínicos simulados para formação de farmacêuticos, integração com cursos de graduação e produção de evidências científicas sobre o impacto do cuidado farmacêutico digital.</p></div>
+    <div class="resultado-item"><div class="ri-icon">🌍</div><h3>Para a Equidade em Saúde</h3><p>Democratização do acesso ao farmacêutico clínico para regiões sem serviços especializados e redução das desigualdades no acesso à informação de saúde qualificada.</p></div>
+    <div class="resultado-item"><div class="ri-icon">📊</div><h3>Para a Inovação</h3><p>Desenvolvimento de tecnologias proprietárias de IA aplicadas à farmácia clínica, geração de dados reais de saúde para pesquisa e criação de um novo modelo de negócio replicável.</p></div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- CONSIDERAÇÕES FINAIS -->
+<section id="final" class="fade-in">
+  <div class="section-tag">08 — Considerações Finais</div>
+  <h2 class="section-title">Inovação com<br>propósito social</h2>
+  <div class="final-grid">
+    <div class="final-text">
+      <p>A <strong>InteraSaúde</strong> nasce como resposta concreta às transformações que o setor farmacêutico vive no século XXI: a transição do modelo centrado em produtos para um modelo genuinamente centrado no paciente, impulsionado pela tecnologia e orientado por evidências.</p>
+      <p>Ao integrar análise laboratorial com IA, cuidado farmacêutico clínico e educação em saúde em uma única plataforma digital, o negócio responde simultaneamente a demandas sociais urgentes — como o acesso equitativo à saúde — e a oportunidades de mercado sustentáveis no crescente ecossistema de healthtechs brasileiro.</p>
+      <p>O marketing, nesse modelo, não é apenas uma estratégia comercial, mas um instrumento de saúde pública: comunicar com clareza, construir confiança e empoderar o paciente para que ele se torne protagonista do seu próprio cuidado.</p>
+      <p>A interconexão entre saúde, educação, tecnologia e desenvolvimento sustentável não é apenas uma aspiração — é o modelo de negócio que o mercado e a sociedade demandam. A InteraSaúde está pronta para liderar essa transformação.</p>
+    </div>
+    <div class="final-box">
+      <div class="fb-icon">🌿</div>
+      <h3>Saúde, Ciência<br>& Propósito</h3>
+      <p>A plataforma digital proposta une inovação tecnológica e relevância social, contribuindo para a democratização do conhecimento em saúde e a redução das desigualdades no acesso à informação.</p>
+      <div class="ods-badge">🎯 ODS 3 — Saúde e Bem-Estar</div>
+    </div>
   </div>
 </section>
 
 <footer>
-  <div class="fi">
-    <div><div class="flogo">Intera<span>Saúde</span></div><p class="fcopy" style="margin-top:7px">Saúde inteligente para todos</p></div>
-    <div class="flinks">
-      <a href="https://www.interaanalises.com.br" target="_blank">InteraAnalises</a>
-      <a href="#farmapp">FarmApp</a>
-      <a href="mailto:contato@interasaude.com.br">Contato</a>
-    </div>
-    <p class="fcopy">© 2026 InteraSaúde. Todos os direitos reservados.</p>
-  </div>
+  <span>InteraSaúde</span> · <a href="https://www.interaanalises.com.br" target="_blank" style="color:var(--dourado);text-decoration:none">InteraAnalises</a> · FarmApp · Saúde digital inteligente para todos · 2026
 </footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
