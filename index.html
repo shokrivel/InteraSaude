@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>InteraSaúde — Saúde inteligente para todos</title>
+  <meta name="description" content="Plataforma de saúde digital que une análise laboratorial com IA e farmácia digital."/>
+  <meta property="og:title" content="InteraSaúde"/>
+  <meta property="og:url" content="https://interasaude.com.br"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--teal:#167070;--teal-d:#0e4f4f;--teal-xl:#e6f4f4;--mint:#4dbdbd;--sand:#f7f3ee;--dark:#111c1c;--mid:#3d5555;--light:#8aacac;--white:#fff}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--dark);overflow-x:hidden}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;background:rgba(255,255,255,0.93);backdrop-filter:blur(16px);border-bottom:1px solid rgba(22,112,112,0.1)}
+    .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .logo-icon{width:34px;height:34px;background:var(--teal);border-radius:8px;display:flex;align-items:center;justify-content:center}
+    .logo-text{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--teal-d)}
+    .logo-text span{color:var(--mint)}
+    .nav-links{display:flex;gap:32px;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--mid);font-size:.9rem;font-weight:500;transition:color .2s}
+    .nav-links a:hover{color:var(--teal)}
+    .nav-btn{background:var(--teal);color:var(--white);border:none;border-radius:8px;padding:10px 22px;font-size:.9rem;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s}
+    .nav-btn:hover{background:var(--teal-d);transform:translateY(-1px)}
+    .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:120px 60px 80px;gap:60px;background:linear-gradient(135deg,var(--white) 0%,var(--teal-xl) 100%);position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(22,112,112,.12) 0%,transparent 70%);border-radius:50%}
+    .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(22,112,112,.1);color:var(--teal);border:1px solid rgba(22,112,112,.2);border-radius:100px;padding:6px 14px;font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:24px;animation:fadeUp .6s ease both}
+    .hero-badge::before{content:'';width:6px;height:6px;background:var(--mint);border-radius:50%;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.4)}}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,5vw,3.8rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:22px;animation:fadeUp .6s .1s ease both}
+    .hero h1 em{font-style:normal;color:var(--teal);position:relative}
+    .hero h1 em::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--mint));border-radius:2px}
+    .hero p{font-size:1.05rem;line-height:1.7;color:var(--mid);max-width:480px;margin-bottom:38px;animation:fadeUp .6s .2s ease both}
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp .6s .3s ease both}
+    .btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:var(--white);border:2px solid var(--teal);border-radius:10px;padding:13px 26px;font-size:.95rem;font-weight:600;text-decoration:none;transition:all .2s}
+    .btn-p:hover{background:var(--teal-d);border-color:var(--teal-d);transform:translateY(-2px);box-shadow:0 8px 24px rgba(22,112,112,.3)}
+    .btn-s{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--teal);border:2px solid rgba(22,112,112,.3);border-radius:10px;padding:13px 26px;font-size:.95rem;font-weight:600;text-decoration:none;transition:all .2s}
+    .btn-s:hover{border-color:var(--teal);background:rgba(22,112,112,.06);transform:translateY(-2px)}
+    .hero-visual{display:flex;justify-content:center;align-items:center;animation:fadeIn .8s .3s ease both}
+    .hcard{background:var(--white);border-radius:20px;padding:26px;box-shadow:0 20px 60px rgba(22,112,112,.15),0 4px 16px rgba(0,0,0,.06);border:1px solid rgba(22,112,112,.1);position:relative;z-index:3}
+    .hcard-wrap{position:relative;width:100%;max-width:420px}
+    .hfloat{position:absolute;background:var(--white);border-radius:14px;padding:14px 18px;box-shadow:0 12px 40px rgba(0,0,0,.12);border:1px solid rgba(22,112,112,.08);z-index:4}
+    .hf1{bottom:-22px;right:-22px}.hf2{top:-18px;left:-18px}
+    .cicon{width:44px;height:44px;background:var(--teal-xl);border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+    .cicon svg{width:22px;height:22px;color:var(--teal)}
+    .ct{font-weight:700;font-size:.95rem;margin-bottom:3px}
+    .cs{font-size:.78rem;color:var(--light)}
+    .cbar{display:flex;align-items:center;gap:9px;margin-top:14px}
+    .bar{flex:1;height:5px;background:var(--teal-xl);border-radius:3px;overflow:hidden}
+    .fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--mint));border-radius:3px;animation:fill 1.5s .8s ease both}
+    @keyframes fill{from{width:0}}
+    .bv{font-size:.76rem;font-weight:700;color:var(--teal);white-space:nowrap}
+    .fl{font-size:.72rem;font-weight:600;color:var(--mid);margin-bottom:3px}
+    .fv{font-size:1.1rem;font-weight:700;color:var(--dark)}
+    .fu{font-size:.68rem;color:var(--light)}
+    .ft{display:inline-flex;align-items:center;font-size:.72rem;font-weight:600;color:#22c55e;background:rgba(34,197,94,.1);padding:2px 7px;border-radius:100px;margin-top:3px}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    section{padding:90px 60px}
+    .slabel{display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+    .stitle{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,4vw,2.6rem);font-weight:700;line-height:1.15;color:var(--dark);letter-spacing:-.02em;margin-bottom:18px}
+    .sdesc{font-size:1rem;line-height:1.7;color:var(--mid);max-width:540px}
+    .products{background:var(--sand)}
+    .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:56px}
+    .pcard{background:var(--white);border-radius:22px;padding:44px;border:1px solid rgba(22,112,112,.08);transition:all .3s;position:relative;overflow:hidden}
+    .pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--mint));opacity:0;transition:opacity .3s}
+    .pcard:hover{transform:translateY(-5px);box-shadow:0 20px 56px rgba(22,112,112,.12);border-color:rgba(22,112,112,.15)}
+    .pcard:hover::before{opacity:1}
+    .picon{width:58px;height:58px;background:var(--teal-xl);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:24px}
+    .picon svg{width:28px;height:28px;color:var(--teal)}
+    .pname{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--dark);margin-bottom:10px}
+    .pdesc{font-size:.92rem;line-height:1.7;color:var(--mid);margin-bottom:28px}
+    .pfeat{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:32px}
+    .pfeat li{display:flex;align-items:center;gap:9px;font-size:.85rem;color:var(--mid)}
+    .pfeat li::before{content:'';width:16px;height:16px;flex-shrink:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23167070'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E") center/contain no-repeat}
+    .plink{display:inline-flex;align-items:center;gap:7px;color:var(--teal);font-weight:600;font-size:.9rem;text-decoration:none;transition:gap .2s}
+    .plink:hover{gap:11px}
+    .plink svg{width:16px;height:16px}
+    .how{background:var(--white)}
+    .hgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:60px}
+    .hstep{text-align:center;padding:36px 28px;border-radius:18px;border:1px solid rgba(22,112,112,.08);transition:all .3s}
+    .hstep:hover{background:var(--teal-xl);border-color:rgba(22,112,112,.2)}
+    .snum{width:48px;height:48px;background:var(--teal);color:var(--white);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin:0 auto 18px}
+    .stit{font-weight:700;font-size:1rem;margin-bottom:9px;color:var(--dark)}
+    .sdsc{font-size:.85rem;line-height:1.65;color:var(--mid)}
+    .stats{background:var(--teal-d);display:grid;grid-template-columns:repeat(4,1fr)}
+    .si{padding:56px 36px;text-align:center;border-right:1px solid rgba(255,255,255,.1)}
+    .si:last-child{border-right:none}
+    .sn{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:7px}
+    .sn span{color:var(--mint)}
+    .sl{font-size:.85rem;color:rgba(255,255,255,.6);font-weight:500}
+    .cta{background:var(--sand);text-align:center;padding:110px 60px}
+    .cta .stitle{max-width:580px;margin:0 auto 18px}
+    .cta .sdesc{margin:0 auto 44px;text-align:center}
+    .ctabtns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    footer{background:var(--dark);padding:56px 60px}
+    .fi{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:22px}
+    .flogo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white)}
+    .flogo span{color:var(--mint)}
+    .fcopy{font-size:.8rem;color:rgba(255,255,255,.4)}
+    .flinks{display:flex;gap:22px}
+    .flinks a{font-size:.82rem;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+    .flinks a:hover{color:var(--mint)}
+    @media(max-width:900px){
+      nav{padding:15px 22px}.nav-links{display:none}
+      .hero{grid-template-columns:1fr;padding:96px 22px 56px;gap:40px}.hero-visual{display:none}
+      section{padding:64px 22px}.pgrid{grid-template-columns:1fr}.hgrid{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr 1fr}.si{border-right:none;border-bottom:1px solid rgba(255,255,255,.1)}
+      .cta{padding:72px 22px}footer{padding:36px 22px}.fi{flex-direction:column;text-align:center}
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2v16M2 10h16" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="10" cy="10" r="8" stroke="white" stroke-width="1.5" fill="none" opacity="0.5"/></svg></div>
+    <span class="logo-text">Intera<span>Saúde</span></span>
+  </a>
+  <ul class="nav-links"><li><a href="#produtos">Produtos</a></li><li><a href="#como-funciona">Como funciona</a></li></ul>
+  <a href="https://www.interaanalises.com.br" target="_blank" class="nav-btn">Acessar plataforma</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-content" style="position:relative;z-index:2">
+    <div class="hero-badge">✦ Saúde Digital Inteligente</div>
+    <h1>Cuide da sua saúde com <em>inteligência</em></h1>
+    <p>A InteraSaúde conecta você com análises laboratoriais por IA e farmácia digital — tudo em uma só plataforma feita para simplificar seu cuidado.</p>
+    <div class="hero-btns">
+      <a href="https://www.interaanalises.com.br" target="_blank" class="btn-p">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:17px;height:17px"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2"/></svg>
+        InteraAnalises
+      </a>
+      <a href="#farmapp" class="btn-s">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:17px;height:17px"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+        Baixar FarmApp
+      </a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hcard-wrap">
+      <div class="hcard">
+        <div class="cicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M12 12l2 2 4-4"/></svg></div>
+        <div class="ct">Análise de exames com IA</div>
+        <div class="cs">Interpretação personalizada em segundos</div>
+        <div class="cbar"><div class="bar"><div class="fill" style="width:87%"></div></div><div class="bv">87% precisão</div></div>
+        <div class="cbar" style="margin-top:7px"><div class="bar"><div class="fill" style="width:94%;animation-delay:.3s"></div></div><div class="bv">94% satisfação</div></div>
+      </div>
+      <div class="hfloat hf1"><div class="fl">Hemoglobina</div><div class="fv">14.2 <span class="fu">g/dL</span></div><div class="ft">↑ Normal</div></div>
+      <div class="hfloat hf2"><div class="fl">FarmApp</div><div class="fv" style="font-size:.9rem">📦 Farmácia digital</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="products" id="produtos">
+  <div style="text-align:center;max-width:580px;margin:0 auto">
+    <span class="slabel">Nossos produtos</span>
+    <h2 class="stitle">Duas soluções, um ecossistema</h2>
+    <p class="sdesc">Desenvolvemos ferramentas que colocam a tecnologia a serviço da sua saúde.</p>
+  </div>
+  <div class="pgrid">
+    <div class="pcard">
+      <div class="picon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2M12 12l2 2 4-4"/></svg></div>
+      <div class="pname">InteraAnalises</div>
+      <p class="pdesc">Plataforma web que analisa seus exames laboratoriais com inteligência artificial, sugere especialistas próximos e guarda seu histórico de saúde.</p>
+      <ul class="pfeat">
+        <li>Análise de exames por IA Gemini</li>
+        <li>Histórico completo de consultas</li>
+        <li>Especialistas próximos no mapa</li>
+        <li>Perfis para pacientes e profissionais</li>
+        <li>Seguro e confidencial</li>
+      </ul>
+      <a href="https://www.interaanalises.com.br" target="_blank" class="plink">Acessar plataforma <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="pcard" id="farmapp">
+      <div class="picon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01M8 6h8M8 10h8M8 14h4"/></svg></div>
+      <div class="pname">FarmApp</div>
+      <p class="pdesc">Aplicativo móvel de telefarmácia que conecta você com farmacêuticos, facilita a dispensação de medicamentos e oferece orientação farmacêutica.</p>
+      <ul class="pfeat">
+        <li>Teleconsulta farmacêutica</li>
+        <li>Histórico de medicamentos</li>
+        <li>Lembretes de posologia</li>
+        <li>Orientação de interações</li>
+        <li>Disponível para iOS e Android</li>
+      </ul>
+      <a href="#download" class="plink">Baixar o app <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="como-funciona">
+  <div style="text-align:center;max-width:580px;margin:0 auto">
+    <span class="slabel">Simples assim</span>
+    <h2 class="stitle">Como funciona</h2>
+    <p class="sdesc">Em três passos você acessa análises de saúde com inteligência artificial.</p>
+  </div>
+  <div class="hgrid">
+    <div class="hstep"><div class="snum">1</div><div class="stit">Crie sua conta</div><p class="sdsc">Cadastre-se gratuitamente no InteraAnalises ou baixe o FarmApp. Configure seu perfil como paciente, acadêmico ou profissional de saúde.</p></div>
+    <div class="hstep"><div class="snum">2</div><div class="stit">Descreva seus sintomas</div><p class="sdsc">Informe seus sintomas, duração, histórico familiar e anexe seus exames laboratoriais. Nossa IA processa tudo com base em evidências científicas.</p></div>
+    <div class="hstep"><div class="snum">3</div><div class="stit">Receba sua análise</div><p class="sdsc">Em segundos você recebe uma análise personalizada com a especialidade indicada e os profissionais de saúde mais próximos de você.</p></div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="si"><div class="sn">2<span>+</span></div><div class="sl">Produtos ativos</div></div>
+  <div class="si"><div class="sn">IA<span>*</span></div><div class="sl">Gemini 2.5 Flash</div></div>
+  <div class="si"><div class="sn">100<span>%</span></div><div class="sl">Dados criptografados</div></div>
+  <div class="si"><div class="sn">24<span>h</span></div><div class="sl">Disponibilidade</div></div>
+</div>
+
+<section class="cta" id="download">
+  <span class="slabel">Comece agora</span>
+  <h2 class="stitle">Sua saúde merece tecnologia de ponta</h2>
+  <p class="sdesc">Acesse o InteraAnalises direto no navegador ou baixe o FarmApp e tenha um farmacêutico no bolso.</p>
+  <div class="ctabtns">
+    <a href="https://www.interaanalises.com.br" target="_blank" class="btn-p">Acessar InteraAnalises</a>
+    <a href="#" class="btn-s" onclick="alert('FarmApp em breve nas lojas! Em desenvolvimento.')">Baixar FarmApp</a>
+  </div>
+</section>
+
+<footer>
+  <div class="fi">
+    <div><div class="flogo">Intera<span>Saúde</span></div><p class="fcopy" style="margin-top:7px">Saúde inteligente para todos</p></div>
+    <div class="flinks">
+      <a href="https://www.interaanalises.com.br" target="_blank">InteraAnalises</a>
+      <a href="#farmapp">FarmApp</a>
+      <a href="mailto:contato@interasaude.com.br">Contato</a>
+    </div>
+    <p class="fcopy">© 2026 InteraSaúde. Todos os direitos reservados.</p>
+  </div>
+</footer>
+</body>
+</html>
