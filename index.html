@@ -6,203 +6,427 @@
 <title>InteraSaúde — Saúde digital inteligente para todos</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --verde: #1a7a4a;
-    --verde-claro: #2ecc71;
-    --verde-escuro: #0f4a2e;
-    --creme: #f5f0e8;
-    --dourado: #c8a84b;
-    --dourado-claro: #e8c96a;
-    --cinza-escuro: #1c1c1c;
-    --cinza-medio: #3d3d3d;
-    --branco: #fafaf8;
-    --accent: #e8f5ee;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { background: var(--creme); color: var(--cinza-escuro); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(245,240,232,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,168,75,0.3); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-  .nav-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.4rem; color: var(--verde-escuro); letter-spacing: -0.5px; }
-  .nav-logo span { color: var(--dourado); }
-  .nav-links { display: flex; gap: 28px; list-style: none; }
-  .nav-links a { font-size: 0.78rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cinza-medio); text-decoration: none; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--verde); }
-  .nav-cta-links { display: flex; gap: 12px; align-items: center; }
-  .nav-btn-primary { background: var(--verde); color: var(--branco); font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 20px; border-radius: 2px; text-decoration: none; transition: background 0.2s; }
-  .nav-btn-primary:hover { background: var(--verde-escuro); }
-  .nav-btn-secondary { background: transparent; color: var(--dourado); border: 1px solid var(--dourado); font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 9px 18px; border-radius: 2px; text-decoration: none; transition: all 0.2s; }
-  .nav-btn-secondary:hover { background: var(--dourado); color: var(--verde-escuro); }
-  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
-  .hero-left { background: var(--verde-escuro); display: flex; flex-direction: column; justify-content: center; padding: 120px 60px 80px; position: relative; z-index: 1; }
-  .hero-left::after { content: ''; position: absolute; right: -60px; top: 0; bottom: 0; width: 120px; background: var(--verde-escuro); clip-path: polygon(0 0, 0 100%, 100% 100%); z-index: 2; }
-  .hero-tag { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--dourado); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
-  .hero-tag::before { content: ''; width: 32px; height: 1px; background: var(--dourado); }
-  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 5vw, 5rem); font-weight: 900; line-height: 1.05; color: var(--branco); margin-bottom: 8px; }
-  .hero-title em { font-style: italic; color: var(--dourado-claro); }
-  .hero-subtitle { font-size: 1.05rem; color: rgba(255,255,255,0.65); max-width: 400px; margin-top: 20px; margin-bottom: 48px; }
-  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
-  .hero-cta { display: inline-flex; align-items: center; gap: 12px; background: var(--dourado); color: var(--verde-escuro); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; padding: 16px 32px; border-radius: 2px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
-  .hero-cta:hover { background: var(--dourado-claro); transform: translateY(-2px); }
-  .hero-cta-ghost { display: inline-flex; align-items: center; gap: 12px; background: transparent; color: var(--dourado); border: 2px solid var(--dourado); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; padding: 14px 28px; border-radius: 2px; text-decoration: none; transition: all 0.2s; }
-  .hero-cta-ghost:hover { background: rgba(200,168,75,0.15); transform: translateY(-2px); }
-  .hero-right { background: var(--branco); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 120px 60px 80px 100px; position: relative; }
-  .hero-visual { position: relative; width: 100%; max-width: 380px; }
-  .circle-big { width: 320px; height: 320px; border-radius: 50%; background: linear-gradient(135deg, var(--accent) 0%, rgba(200,168,75,0.15) 100%); border: 2px solid rgba(200,168,75,0.3); display: flex; align-items: center; justify-content: center; position: relative; margin: 0 auto; animation: pulse 4s ease-in-out infinite; }
-  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
-  .circle-icon { font-size: 5rem; }
-  .stat-card { position: absolute; background: white; border-left: 3px solid var(--dourado); padding: 12px 18px; border-radius: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); min-width: 140px; }
-  .stat-card:nth-child(2) { top: 20px; right: -20px; }
-  .stat-card:nth-child(3) { bottom: 30px; left: -30px; }
-  .stat-card:nth-child(4) { top: 50%; right: -40px; transform: translateY(-50%); }
-  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: var(--verde); }
-  .stat-lbl { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.5px; color: var(--cinza-medio); text-transform: uppercase; }
-  section { padding: 100px 60px; max-width: 1200px; margin: 0 auto; }
-  .section-tag { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase; color: var(--dourado); margin-bottom: 12px; }
-  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; line-height: 1.1; color: var(--cinza-escuro); margin-bottom: 20px; }
-  .section-lead { font-size: 1rem; color: var(--cinza-medio); max-width: 600px; margin-bottom: 60px; }
-  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .fade-in.visible { opacity: 1; transform: translateY(0); }
-  .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-  .intro-text p { margin-bottom: 20px; color: var(--cinza-medio); }
-  .intro-box { background: var(--verde-escuro); color: var(--branco); padding: 48px; border-radius: 4px; }
-  .ib-icon { font-size: 3rem; margin-bottom: 20px; }
-  .intro-box h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; margin-bottom: 16px; color: var(--dourado-claro); }
-  .intro-box p { font-size: 0.95rem; color: rgba(255,255,255,0.7); }
-  .objetivo-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; align-items: start; }
-  .obj-list { display: flex; flex-direction: column; gap: 16px; }
-  .obj-item { display: flex; gap: 16px; padding: 20px; border: 1px solid rgba(200,168,75,0.2); border-radius: 4px; }
-  .obj-icon { font-size: 1.5rem; flex-shrink: 0; }
-  .obj-item h4 { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
-  .obj-item p { font-size: 0.85rem; color: var(--cinza-medio); }
-  .objetivo-box { background: var(--verde-escuro); padding: 40px; border-radius: 4px; color: var(--branco); }
-  .objetivo-box h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: var(--dourado-claro); margin-bottom: 20px; }
-  .objetivo-box p { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 16px; }
-  .bg-branco { background: var(--branco); }
-  .metodo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-  .metodo-card { background: var(--creme); padding: 32px 24px; border-radius: 4px; border-top: 3px solid var(--dourado); }
-  .mc-num { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--dourado); letter-spacing: 2px; margin-bottom: 16px; }
-  .mc-icon { font-size: 2rem; margin-bottom: 16px; }
-  .metodo-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
-  .metodo-card p { font-size: 0.85rem; color: var(--cinza-medio); }
-  .servicos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-  .servico-card { background: var(--branco); border: 1px solid rgba(26,122,74,0.15); padding: 36px 28px; border-radius: 4px; transition: all 0.3s; }
-  .servico-card:hover { border-color: var(--verde); box-shadow: 0 8px 32px rgba(26,122,74,0.1); transform: translateY(-4px); }
-  .sc-icon-wrap { width: 56px; height: 56px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 1.6rem; }
-  .servico-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
-  .sc-content p { font-size: 0.85rem; color: var(--cinza-medio); }
-  .ciclo-bg { background: var(--verde-escuro); }
-  .ciclo-section { max-width: 1200px; margin: 0 auto; padding: 100px 60px; }
-  .ciclo-section .section-tag { color: var(--dourado); }
-  .ciclo-section .section-title { color: var(--branco); }
-  .ciclo-section .section-lead { color: rgba(255,255,255,0.65); }
-  .ciclo-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; }
-  .ciclo-step { padding: 32px 20px; border-right: 1px solid rgba(255,255,255,0.1); text-align: center; position: relative; }
-  .ciclo-step:last-child { border-right: none; }
-  .ciclo-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: rgba(200,168,75,0.3); margin-bottom: 12px; }
-  .ciclo-icon { font-size: 2rem; margin-bottom: 12px; }
-  .ciclo-step h4 { font-size: 0.85rem; font-weight: 700; color: var(--dourado-claro); margin-bottom: 8px; letter-spacing: 0.5px; }
-  .ciclo-step p { font-size: 0.78rem; color: rgba(255,255,255,0.55); }
-  .publico-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .publico-card { padding: 36px 28px; border: 1px solid rgba(200,168,75,0.2); border-radius: 4px; transition: all 0.3s; }
-  .publico-card:hover { border-color: var(--dourado); background: rgba(200,168,75,0.05); }
-  .pc-icon { font-size: 2.5rem; margin-bottom: 20px; }
-  .publico-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
-  .publico-card p { font-size: 0.85rem; color: var(--cinza-medio); margin-bottom: 16px; }
-  .pc-tag { display: inline-block; background: var(--accent); color: var(--verde); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 2px; }
-  .mkt-bg { background: var(--creme); }
-  .mkt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .mkt-card { background: var(--branco); padding: 32px 24px; border-radius: 4px; }
-  .mkt-card h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
-  .mkt-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-  .mkt-card li { font-size: 0.82rem; color: var(--cinza-medio); padding-left: 14px; position: relative; }
-  .mkt-card li::before { content: '–'; position: absolute; left: 0; color: var(--dourado); }
-  .resultados-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .resultado-item { padding: 32px 24px; border: 1px solid rgba(26,122,74,0.12); border-radius: 4px; }
-  .ri-icon { font-size: 2rem; margin-bottom: 16px; }
-  .resultado-item h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
-  .resultado-item p { font-size: 0.85rem; color: var(--cinza-medio); }
-  .final-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 60px; align-items: center; }
-  .final-text p { color: var(--cinza-medio); margin-bottom: 20px; }
-  .final-box { background: var(--verde-escuro); padding: 48px; border-radius: 4px; text-align: center; }
-  .fb-icon { font-size: 3rem; margin-bottom: 20px; }
-  .final-box h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--dourado-claro); margin-bottom: 16px; line-height: 1.2; }
-  .final-box p { font-size: 0.88rem; color: rgba(255,255,255,0.65); margin-bottom: 24px; }
-  .ods-badge { display: inline-block; background: rgba(200,168,75,0.2); color: var(--dourado-claro); font-size: 0.78rem; font-weight: 700; padding: 8px 16px; border-radius: 2px; border: 1px solid rgba(200,168,75,0.3); }
-  .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(200,168,75,0.3), transparent); }
-  .valor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
-  .valor-text p { color: var(--cinza-medio); margin-bottom: 20px; }
-  .diferencial-list { display: flex; flex-direction: column; gap: 20px; }
-  .dif-item { display: flex; gap: 16px; }
-  .dif-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
-  .dif-item h4 { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
-  .dif-item p { font-size: 0.82rem; color: var(--cinza-medio); }
-  footer { background: var(--cinza-escuro); padding: 32px 60px; text-align: center; font-size: 0.78rem; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
-  footer span { color: var(--dourado); font-weight: 700; }
+  :root{--verde:#1a7a4a;--verde-claro:#2ecc71;--verde-escuro:#0f4a2e;--creme:#f5f0e8;--dourado:#c8a84b;--dourado-claro:#e8c96a;--cinza-escuro:#1c1c1c;--cinza-medio:#3d3d3d;--branco:#fafaf8;--accent:#e8f5ee}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--creme);color:var(--cinza-escuro);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(245,240,232,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,168,75,0.3);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:64px}
+  .nav-logo{font-family:'Playfair Display',serif;font-weight:900;font-size:1.4rem;color:var(--verde-escuro);letter-spacing:-.5px}
+  .nav-logo span{color:var(--dourado)}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{font-size:.78rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--cinza-medio);text-decoration:none;transition:color .2s}
+  .nav-links a:hover{color:var(--verde)}
+  .nav-cta-links{display:flex;gap:12px;align-items:center}
+  .nav-btn-primary{background:var(--verde);color:var(--branco);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:10px 20px;border-radius:2px;text-decoration:none;transition:background .2s}
+  .nav-btn-primary:hover{background:var(--verde-escuro)}
+  .nav-btn-secondary{background:transparent;color:var(--dourado);border:1px solid var(--dourado);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:2px;text-decoration:none;transition:all .2s}
+  .nav-btn-secondary:hover{background:var(--dourado);color:var(--verde-escuro)}
+  .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+  .hero-left{background:var(--verde-escuro);display:flex;flex-direction:column;justify-content:center;padding:120px 60px 80px;position:relative;z-index:1}
+  .hero-left::after{content:'';position:absolute;right:-60px;top:0;bottom:0;width:120px;background:var(--verde-escuro);clip-path:polygon(0 0,0 100%,100% 100%);z-index:2}
+  .hero-tag{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--dourado);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+  .hero-tag::before{content:'';width:32px;height:1px;background:var(--dourado)}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(3rem,5vw,5rem);font-weight:900;line-height:1.05;color:var(--branco);margin-bottom:8px}
+  .hero-title em{font-style:italic;color:var(--dourado-claro)}
+  .hero-subtitle{font-size:1.05rem;color:rgba(255,255,255,.65);max-width:400px;margin-top:20px;margin-bottom:48px}
+  .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-cta{display:inline-flex;align-items:center;gap:12px;background:var(--dourado);color:var(--verde-escuro);font-weight:700;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;padding:16px 32px;border-radius:2px;text-decoration:none;transition:background .2s,transform .2s}
+  .hero-cta:hover{background:var(--dourado-claro);transform:translateY(-2px)}
+  .hero-cta-ghost{display:inline-flex;align-items:center;gap:12px;background:transparent;color:var(--dourado);border:2px solid var(--dourado);font-weight:700;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;padding:14px 28px;border-radius:2px;text-decoration:none;transition:all .2s}
+  .hero-cta-ghost:hover{background:rgba(200,168,75,.15);transform:translateY(-2px)}
+  .hero-right{background:var(--branco);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:120px 60px 80px 100px;position:relative}
+  .hero-visual{position:relative;width:100%;max-width:380px}
+  .circle-big{width:320px;height:320px;border-radius:50%;background:linear-gradient(135deg,var(--accent) 0%,rgba(200,168,75,.15) 100%);border:2px solid rgba(200,168,75,.3);display:flex;align-items:center;justify-content:center;position:relative;margin:0 auto;animation:pulse 4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+  .circle-icon{font-size:5rem}
+  .stat-card{position:absolute;background:white;border-left:3px solid var(--dourado);padding:12px 18px;border-radius:4px;box-shadow:0 8px 32px rgba(0,0,0,.08);min-width:140px}
+  .stat-card:nth-child(2){top:20px;right:-20px}
+  .stat-card:nth-child(3){bottom:30px;left:-30px}
+  .stat-card:nth-child(4){top:50%;right:-40px;transform:translateY(-50%)}
+  .stat-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--verde)}
+  .stat-lbl{font-size:.7rem;font-weight:500;letter-spacing:.5px;color:var(--cinza-medio);text-transform:uppercase}
+  section{padding:100px 60px;max-width:1200px;margin:0 auto}
+  .section-tag{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--dourado);margin-bottom:12px}
+  .section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.1;color:var(--cinza-escuro);margin-bottom:20px}
+  .section-lead{font-size:1rem;color:var(--cinza-medio);max-width:600px;margin-bottom:60px}
+  .fade-in{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+  .fade-in.visible{opacity:1;transform:translateY(0)}
+  .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .intro-text p{margin-bottom:20px;color:var(--cinza-medio)}
+  .intro-box{background:var(--verde-escuro);color:var(--branco);padding:48px;border-radius:4px}
+  .ib-icon{font-size:3rem;margin-bottom:20px}
+  .intro-box h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;margin-bottom:16px;color:var(--dourado-claro)}
+  .intro-box p{font-size:.95rem;color:rgba(255,255,255,.7)}
+  .objetivo-grid{display:grid;grid-template-columns:2fr 1fr;gap:48px;align-items:start}
+  .obj-list{display:flex;flex-direction:column;gap:16px}
+  .obj-item{display:flex;gap:16px;padding:20px;border:1px solid rgba(200,168,75,.2);border-radius:4px}
+  .obj-icon{font-size:1.5rem;flex-shrink:0}
+  .obj-item h4{font-weight:700;font-size:.95rem;margin-bottom:4px}
+  .obj-item p{font-size:.85rem;color:var(--cinza-medio)}
+  .objetivo-box{background:var(--verde-escuro);padding:40px;border-radius:4px;color:var(--branco)}
+  .objetivo-box h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--dourado-claro);margin-bottom:20px}
+  .objetivo-box p{font-size:.9rem;color:rgba(255,255,255,.7);margin-bottom:16px}
+  .bg-branco{background:var(--branco)}
+  .metodo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .metodo-card{background:var(--creme);padding:32px 24px;border-radius:4px;border-top:3px solid var(--dourado)}
+  .mc-num{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--dourado);letter-spacing:2px;margin-bottom:16px}
+  .mc-icon{font-size:2rem;margin-bottom:16px}
+  .metodo-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:12px}
+  .metodo-card p{font-size:.85rem;color:var(--cinza-medio)}
+  .servicos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .servico-card{background:var(--branco);border:1px solid rgba(26,122,74,.15);padding:36px 28px;border-radius:4px;transition:all .3s}
+  .servico-card:hover{border-color:var(--verde);box-shadow:0 8px 32px rgba(26,122,74,.1);transform:translateY(-4px)}
+  .sc-icon-wrap{width:56px;height:56px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:1.6rem}
+  .servico-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:10px}
+  .sc-content p{font-size:.85rem;color:var(--cinza-medio)}
+  .ciclo-bg{background:var(--verde-escuro)}
+  .ciclo-section{max-width:1200px;margin:0 auto;padding:100px 60px}
+  .ciclo-section .section-tag{color:var(--dourado)}
+  .ciclo-section .section-title{color:var(--branco)}
+  .ciclo-section .section-lead{color:rgba(255,255,255,.65)}
+  .ciclo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+  .ciclo-step{padding:32px 20px;border-right:1px solid rgba(255,255,255,.1);text-align:center;position:relative}
+  .ciclo-step:last-child{border-right:none}
+  .ciclo-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:rgba(200,168,75,.3);margin-bottom:12px}
+  .ciclo-icon{font-size:2rem;margin-bottom:12px}
+  .ciclo-step h4{font-size:.85rem;font-weight:700;color:var(--dourado-claro);margin-bottom:8px;letter-spacing:.5px}
+  .ciclo-step p{font-size:.78rem;color:rgba(255,255,255,.55)}
+  .publico-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .publico-card{padding:36px 28px;border:1px solid rgba(200,168,75,.2);border-radius:4px;transition:all .3s}
+  .publico-card:hover{border-color:var(--dourado);background:rgba(200,168,75,.05)}
+  .pc-icon{font-size:2.5rem;margin-bottom:20px}
+  .publico-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:10px}
+  .publico-card p{font-size:.85rem;color:var(--cinza-medio);margin-bottom:16px}
+  .pc-tag{display:inline-block;background:var(--accent);color:var(--verde);font-size:.72rem;font-weight:700;letter-spacing:.5px;padding:4px 10px;border-radius:2px}
+  .mkt-bg{background:var(--creme)}
+  .mkt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .mkt-card{background:var(--branco);padding:32px 24px;border-radius:4px}
+  .mkt-card h3{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:16px}
+  .mkt-card ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .mkt-card li{font-size:.82rem;color:var(--cinza-medio);padding-left:14px;position:relative}
+  .mkt-card li::before{content:'–';position:absolute;left:0;color:var(--dourado)}
+  .resultados-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .resultado-item{padding:32px 24px;border:1px solid rgba(26,122,74,.12);border-radius:4px}
+  .ri-icon{font-size:2rem;margin-bottom:16px}
+  .resultado-item h3{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:10px}
+  .resultado-item p{font-size:.85rem;color:var(--cinza-medio)}
+  .final-grid{display:grid;grid-template-columns:3fr 2fr;gap:60px;align-items:center}
+  .final-text p{color:var(--cinza-medio);margin-bottom:20px}
+  .final-box{background:var(--verde-escuro);padding:48px;border-radius:4px;text-align:center}
+  .fb-icon{font-size:3rem;margin-bottom:20px}
+  .final-box h3{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--dourado-claro);margin-bottom:16px;line-height:1.2}
+  .final-box p{font-size:.88rem;color:rgba(255,255,255,.65);margin-bottom:24px}
+  .ods-badge{display:inline-block;background:rgba(200,168,75,.2);color:var(--dourado-claro);font-size:.78rem;font-weight:700;padding:8px 16px;border-radius:2px;border:1px solid rgba(200,168,75,.3)}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,75,.3),transparent)}
+  .valor-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+  .valor-text p{color:var(--cinza-medio);margin-bottom:20px}
+  .diferencial-list{display:flex;flex-direction:column;gap:20px}
+  .dif-item{display:flex;gap:16px}
+  .dif-icon{font-size:1.3rem;flex-shrink:0;margin-top:2px}
+  .dif-item h4{font-weight:700;font-size:.9rem;margin-bottom:4px}
+  .dif-item p{font-size:.82rem;color:var(--cinza-medio)}
+  footer{background:var(--cinza-escuro);padding:32px 60px;text-align:center;font-size:.78rem;color:rgba(255,255,255,.4);letter-spacing:.5px}
+  footer span{color:var(--dourado);font-weight:700}
 
-  /* ── Tablet (≤ 900px) ─────────────────────────────────────────── */
-  @media (max-width: 900px) {
-    nav { padding: 0 20px; }
-    .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; }
-    .hero-right { display: none; }
-    .hero-left { padding: 100px 24px 60px; }
-    .hero-left::after { display: none; }
-    section { padding: 64px 24px; }
-    .intro-grid, .objetivo-grid, .final-grid, .valor-grid { grid-template-columns: 1fr; }
-    .metodo-grid { grid-template-columns: 1fr 1fr; }
-    .servicos-grid { grid-template-columns: 1fr; }
-    .ciclo-grid { grid-template-columns: 1fr 1fr; }
-    .publico-grid { grid-template-columns: 1fr; }
-    .mkt-grid { grid-template-columns: 1fr; }
-    .resultados-grid { grid-template-columns: 1fr; }
-    .produtos-grid { grid-template-columns: 1fr !important; }
-    footer { padding: 24px; }
+  /* Tablet ≤ 900px */
+  @media(max-width:900px){
+    nav{padding:0 20px}
+    .nav-links{display:none}
+    .hero{grid-template-columns:1fr}
+    .hero-right{display:none}
+    .hero-left{padding:100px 24px 60px}
+    .hero-left::after{display:none}
+    section{padding:64px 24px}
+    .ciclo-section{padding:64px 24px}
+    .intro-grid,.objetivo-grid,.final-grid,.valor-grid{grid-template-columns:1fr}
+    .metodo-grid{grid-template-columns:1fr 1fr}
+    .servicos-grid{grid-template-columns:1fr}
+    .ciclo-grid{grid-template-columns:1fr 1fr}
+    .publico-grid{grid-template-columns:1fr}
+    .mkt-grid{grid-template-columns:1fr}
+    .resultados-grid{grid-template-columns:1fr}
+    .produtos-grid{grid-template-columns:1fr!important}
+    footer{padding:24px}
   }
 
-  /* ── Tablet intermediário (≤ 768px) ──────────────────────────── */
-  @media (max-width: 768px) {
-    .metodo-grid      { grid-template-columns: 1fr 1fr; gap: 16px; }
-    .ciclo-grid       { grid-template-columns: 1fr 1fr; gap: 0; }
-    .nav-cta-links    { gap: 8px; }
-    .nav-btn-primary,
-    .nav-btn-secondary{ padding: 8px 12px; font-size: 0.7rem; }
-    section           { padding: 56px 20px; }
-    .ciclo-section    { padding: 56px 20px; }
-    .hero-cta,
-    .hero-cta-ghost   { padding: 13px 22px; font-size: 0.8rem; }
-    .section-lead     { margin-bottom: 36px; }
+  /* Tablet intermediário ≤ 768px */
+  @media(max-width:768px){
+    .metodo-grid{grid-template-columns:1fr 1fr;gap:16px}
+    .ciclo-grid{grid-template-columns:1fr 1fr}
+    .nav-cta-links{gap:8px}
+    .nav-btn-primary,.nav-btn-secondary{padding:8px 12px;font-size:.7rem}
+    section{padding:56px 20px}
+    .ciclo-section{padding:56px 20px}
+    .hero-cta,.hero-cta-ghost{padding:13px 22px;font-size:.8rem}
+    .section-lead{margin-bottom:36px}
   }
 
-  /* ── Mobile (≤ 520px) ────────────────────────────────────────── */
-  @media (max-width: 520px) {
-    nav               { padding: 0 16px; height: 56px; }
-    .nav-logo         { font-size: 1.1rem; }
-    .nav-cta-links    { gap: 6px; }
-    .nav-btn-primary  { display: none; }
-    .nav-btn-secondary{ padding: 7px 10px; font-size: 0.68rem; letter-spacing: 0.5px; }
-    .hero-left        { padding: 80px 18px 48px; }
-    .hero-title       { font-size: clamp(2.2rem, 9vw, 3.2rem); }
-    .hero-subtitle    { font-size: 0.92rem; margin-bottom: 32px; }
-    .hero-btns        { flex-direction: column; gap: 10px; }
-    .hero-cta,
-    .hero-cta-ghost   { width: 100%; justify-content: center; padding: 14px 20px; }
-    section           { padding: 44px 16px; }
-    .ciclo-section    { padding: 44px 16px; }
-    .section-title    { font-size: clamp(1.6rem, 7vw, 2.2rem); }
-    .section-lead     { font-size: 0.88rem; margin-bottom: 28px; }
-    .metodo-grid      { grid-template-columns: 1fr; gap: 12px; }
-    .ciclo-grid       { grid-template-columns: 1fr; }
-    .ciclo-step       { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 24px 16px; }
-    .ciclo-step:last-child { border-bottom: none; }
-    .stat-card        { position: static; margin-bottom: 10px; min-width: unset; }
-    .circle-big       { width: 220px; height: 220px; }
-    .circle-icon      { font-size: 3.5rem; }
-    .intro-box        { padding: 28px 20px; }
-    .objetivo-box     { padding: 28px 20px; }
-    .final-box        { padding: 32px 20px; }
-    footer            { padding: 20px 16px; font-size: 0.72rem; }
-    .produtos-grid    { grid-template-columns: 1fr !important; }
-    .produto-card     { padding: 24px 18px !important; }
+  /* Mobile ≤ 520px */
+  @media(max-width:520px){
+    nav{padding:0 16px;height:56px}
+    .nav-logo{font-size:1.1rem}
+    .nav-cta-links{gap:6px}
+    .nav-btn-primary{display:none}
+    .nav-btn-secondary{padding:7px 10px;font-size:.68rem;letter-spacing:.5px}
+    .hero-left{padding:80px 18px 48px}
+    .hero-title{font-size:clamp(2.2rem,9vw,3.2rem)}
+    .hero-subtitle{font-size:.92rem;margin-bottom:32px}
+    .hero-btns{flex-direction:column;gap:10px}
+    .hero-cta,.hero-cta-ghost{width:100%;justify-content:center;padding:14px 20px}
+    section{padding:44px 16px}
+    .ciclo-section{padding:44px 16px}
+    .section-title{font-size:clamp(1.6rem,7vw,2.2rem)}
+    .section-lead{font-size:.88rem;margin-bottom:28px}
+    .metodo-grid{grid-template-columns:1fr;gap:12px}
+    .ciclo-grid{grid-template-columns:1fr}
+    .ciclo-step{border-right:none;border-bottom:1px solid rgba(255,255,255,.1);padding:24px 16px}
+    .ciclo-step:last-child{border-bottom:none}
+    .intro-box,.objetivo-box,.final-box{padding:28px 20px}
+    footer{padding:20px 16px;font-size:.72rem}
+    .produtos-grid{grid-template-columns:1fr!important}
+    .produto-card{padding:24px 18px!important}
   }
 </style>
 </head>
+<body>
+
+<nav>
+  <div class="nav-logo">Intera<span>Saúde</span></div>
+  <ul class="nav-links">
+    <li><a href="#introducao">Introdução</a></li>
+    <li><a href="#objetivo">Objetivo</a></li>
+    <li><a href="#metodo">Método</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#publico">Público</a></li>
+    <li><a href="#valor">Valor</a></li>
+  </ul>
+  <div class="nav-cta-links">
+    <a href="https://interaanalises.com.br" class="nav-btn-secondary">InteraAnálises</a>
+    <a href="https://farmapp-fawn.vercel.app" class="nav-btn-primary">FarmApp</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Saúde Digital Brasileira</div>
+    <h1 class="hero-title">Intera<br><em>Saúde</em></h1>
+    <p class="hero-subtitle">Ecossistema digital de saúde que conecta pacientes, profissionais e tecnologia para tornar o cuidado médico mais acessível, preciso e humanizado.</p>
+    <div class="hero-btns">
+      <a href="https://interaanalises.com.br" class="hero-cta">InteraAnálises <span>→</span></a>
+      <a href="https://farmapp-fawn.vercel.app" class="hero-cta-ghost">FarmApp <span>→</span></a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="circle-big">
+        <span class="circle-icon">🦠</span>
+        <div class="stat-card"><div class="stat-num">2</div><div class="stat-lbl">Produtos</div></div>
+        <div class="stat-card"><div class="stat-num">IA</div><div class="stat-lbl">Diagnósticos</div></div>
+        <div class="stat-card"><div class="stat-num">24h</div><div class="stat-lbl">Disponibilidade</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="introducao" class="fade-in">
+  <div class="section-tag">Sobre o Projeto</div>
+  <h2 class="section-title">Saúde digital para todos</h2>
+  <p class="section-lead">O InteraSaúde nasce da convicção de que tecnologia e medicina podem caminhar juntas para democratizar o acesso à saúde de qualidade no Brasil.</p>
+  <div class="intro-grid">
+    <div class="intro-text">
+      <p>Desenvolvemos soluções digitais que utilizam inteligência artificial para auxiliar tanto pacientes quanto profissionais de saúde, reduzindo barreiras de acesso e melhorando a qualidade do atendimento.</p>
+      <p>Nossa abordagem integra análise de exames laboratoriais, gestão de medicamentos e conexão com farmacêuticos especializados, criando um ecossistema completo de cuidado à saúde.</p>
+      <p>Acreditamos que informação clara e acessível é o primeiro passo para uma saúde melhor.</p>
+    </div>
+    <div class="intro-box">
+      <div class="ib-icon">🤭</div>
+      <h3>Nossa Visão</h3>
+      <p>Ser a plataforma de referência em saúde digital no Brasil, conectando cidadãos à informação médica de qualidade e facilitando o acesso a cuidados especializados.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="objetivo" class="bg-branco fade-in" style="max-width:100%;padding-left:0;padding-right:0">
+  <div style="max-width:1200px;margin:0 auto;padding:100px 60px">
+    <div class="section-tag">Propósito</div>
+    <h2 class="section-title">Nosso Objetivo</h2>
+    <p class="section-lead">Democratizar o acesso à informação médica e ao cuidado farmacêutico de qualidade para todos os brasileiros.</p>
+    <div class="objetivo-grid">
+      <div class="obj-list">
+        <div class="obj-item">
+          <div class="obj-icon">🔬</div>
+          <div><h4>Interpretação Inteligente</h4><p>Usar IA para traduzir resultados de exames em informações compreensíveis e acionáveis para o paciente.</p></div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-icon">💡</div>
+          <div><h4>Orientação Especializada</h4><p>Direcionar cada paciente ao especialista correto, reduzindo o tempo e custo do diagnóstico.</p></div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-icon">💊</div>
+          <div><h4>Gestão de Medicamentos</h4><p>Facilitar o acesso a medicamentos com preços justos e acompanhamento farmacêutico profissional.</p></div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-icon">🤝</div>
+          <div><h4>Conexão Humana</h4><p>Manter o elemento humano no centro, conectando pacientes a profissionais qualificados de forma ágil.</p></div>
+        </div>
+      </div>
+      <div class="objetivo-box">
+        <h3>Impacto Esperado</h3>
+        <p>Reduzir em até 60% o tempo entre a realização de exames e a consulta com o especialista adequado.</p>
+        <p>Diminuir gastos desnecessários com consultas em especialidades inadequadas.</p>
+        <p>Aumentar a adesão ao tratamento medicamentoso através de lembretes e orientação contínua.</p>
+        <div class="ods-badge" style="margin-top:20px">🎯 ODS 3 — Saúde e Bem-Estar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="metodo" class="fade-in">
+  <div class="section-tag">Como Funciona</div>
+  <h2 class="section-title">Nosso Método</h2>
+  <p class="section-lead">Uma abordagem estruturada que combina tecnologia avançada com expertise médica e farmacêutica.</p>
+  <div class="metodo-grid">
+    <div class="metodo-card">
+      <div class="mc-num">01</div>
+      <div class="mc-icon">📱</div>
+      <h3>Acesso Digital</h3>
+      <p>Plataformas intuitivas acessíveis via smartphone ou computador, sem necessidade de instalação complexa.</p>
+    </div>
+    <div class="metodo-card">
+      <div class="mc-num">02</div>
+      <div class="mc-icon">🧠</div>
+      <h3>Análise por IA</h3>
+      <p>Algoritmos treinados em dados médicos analisam informações e identificam padrões relevantes.</p>
+    </div>
+    <div class="metodo-card">
+      <div class="mc-num">03</div>
+      <div class="mc-icon">👨‍⚕️</div>
+      <h3>Validação Humana</h3>
+      <p>Profissionais de saúde validam as sugestões da IA, garantindo segurança e precisão diagnóstica.</p>
+    </div>
+    <div class="metodo-card">
+      <div class="mc-num">04</div>
+      <div class="mc-icon">📊</div>
+      <h3>Melhoria Contínua</h3>
+      <p>Feedback constante aprimora os modelos, tornando o sistema cada vez mais preciso e útil.</p>
+    </div>
+  </div>
+</section>
+
+<div class="ciclo-bg">
+  <div class="ciclo-section fade-in">
+    <div class="section-tag">Jornada do Paciente</div>
+    <h2 class="section-title">Do Sintoma ao Cuidado</h2>
+    <p class="section-lead">Acompanhe como transformamos a experiência do paciente em cada etapa.</p>
+    <div class="ciclo-grid">
+      <div class="ciclo-step"><div class="ciclo-num">01</div><div class="ciclo-icon">📝</div><h4>Registro</h4><p>Paciente descreve sintomas ou envia exames pela plataforma</p></div>
+      <div class="ciclo-step"><div class="ciclo-num">02</div><div class="ciclo-icon">🧠</div><h4>Análise IA</h4><p>Algoritmo processa informações e identifica especialidade adequada</p></div>
+      <div class="ciclo-step"><div class="ciclo-num">03</div><div class="ciclo-icon">👨‍⚕️</div><h4>Orientação</h4><p>Farmacêutico valida e orienta sobre medicamentos e próximos passos</p></div>
+      <div class="ciclo-step"><div class="ciclo-num">04</div><div class="ciclo-icon">📍</div><h4>Encaminhamento</h4><p>Indicação do especialista ideal com base na localização e perfil</p></div>
+      <div class="ciclo-step"><div class="ciclo-num">05</div><div class="ciclo-icon">❤️</div><h4>Acompanhamento</h4><p>Monitoramento contínuo do tratamento e adesão medicamentosa</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<section id="servicos" class="bg-branco fade-in" style="max-width:100%;padding-left:0;padding-right:0">
+  <div style="max-width:1200px;margin:0 auto;padding:100px 60px">
+    <div class="section-tag">Produtos</div>
+    <h2 class="section-title">Nossas Soluções</h2>
+    <p class="section-lead">Dois produtos complementares que juntos formam um ecossistema completo de saúde digital.</p>
+    <div class="servicos-grid" style="margin-bottom:40px">
+      <div class="servico-card">
+        <div class="sc-icon-wrap">🧪</div>
+        <div class="sc-content">
+          <h3>InteraAnálises</h3>
+          <p>Plataforma web que usa IA para interpretar exames laboratoriais e direcionar pacientes ao especialista correto. Interface intuitiva com consulta guiada e análise contextualizada.</p>
+          <a href="https://interaanalises.com.br" style="display:inline-block;margin-top:16px;background:var(--verde);color:var(--branco);padding:10px 20px;border-radius:2px;font-size:.8rem;font-weight:700;text-decoration:none;letter-spacing:1px;text-transform:uppercase">Acessar →</a>
+        </div>
+      </div>
+      <div class="servico-card">
+        <div class="sc-icon-wrap">💊</div>
+        <div class="sc-content">
+          <h3>FarmApp</h3>
+          <p>Aplicativo móvel para gestão de medicamentos com lembretes inteligentes, conexão com farmacêuticos online, busca de preços e análise de prescrições via IA.</p>
+          <a href="https://farmapp-fawn.vercel.app" style="display:inline-block;margin-top:16px;background:var(--verde);color:var(--branco);padding:10px 20px;border-radius:2px;font-size:.8rem;font-weight:700;text-decoration:none;letter-spacing:1px;text-transform:uppercase">Acessar →</a>
+        </div>
+      </div>
+      <div class="servico-card">
+        <div class="sc-icon-wrap">🔗</div>
+        <div class="sc-content">
+          <h3>Integração Total</h3>
+          <p>Os dois produtos se complementam: dados do FarmApp enriquecem a análise do InteraAnálises, criando uma visão 360° da saúde do paciente ao longo do tempo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="publico" class="fade-in">
+  <div class="section-tag">Quem Atendemos</div>
+  <h2 class="section-title">Público-Alvo</h2>
+  <p class="section-lead">Desenvolvemos para quem mais precisa de acesso fácil a informações de saúde de qualidade.</p>
+  <div class="publico-grid">
+    <div class="publico-card">
+      <div class="pc-icon">👥</div>
+      <h3>Pacientes</h3>
+      <p>Pessoas que precisam interpretar exames, gerenciar medicamentos ou encontrar o especialista adequado de forma rápida e acessível.</p>
+      <span class="pc-tag">Usuário Final</span>
+    </div>
+    <div class="publico-card">
+      <div class="pc-icon">🏫</div>
+      <h3>Estudantes de Saúde</h3>
+      <p>Acadêmicos de medicina, farmácia e áreas correlatas que desejam aprofundar conhecimentos clínicos com casos reais e ferramentas práticas.</p>
+      <span class="pc-tag">Acadêmico</span>
+    </div>
+    <div class="publico-card">
+      <div class="pc-icon">👨‍⚕️</div>
+      <h3>Profissionais de Saúde</h3>
+      <p>Farmacêuticos, médicos e outros profissionais que buscam ferramentas digitais para melhorar o atendimento e aumentar a eficiência clínica.</p>
+      <span class="pc-tag">Profissional</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="valor" class="bg-branco fade-in" style="max-width:100%;padding-left:0;padding-right:0">
+  <div style="max-width:1200px;margin:0 auto;padding:100px 60px">
+    <div class="section-tag">Proposta de Valor</div>
+    <h2 class="section-title">Por que o InteraSaúde?</h2>
+    <div class="valor-grid">
+      <div class="valor-text">
+        <p>O InteraSaúde não é apenas mais um aplicativo de saúde. É um ecossistema pensado para resolver os gargalos reais do sistema de saúde brasileiro: o tempo de espera, o custo elevado e a dificuldade de encontrar o especialista certo.</p>
+        <p>Combinamos o melhor da tecnologia com a indispensável presença humana para oferecer uma experiência que vai além do digital.</p>
+      </div>
+      <div class="diferencial-list">
+        <div class="dif-item"><div class="dif-icon">⚡</div><div><h4>Velocidade</h4><p>Análise de exames e orientação em minutos, não dias.</p></div></div>
+        <div class="dif-item"><div class="dif-icon">🎯</div><div><h4>Precisão</h4><p>IA treinada com literatura médica e validada por profissionais.</p></div></div>
+        <div class="dif-item"><div class="dif-icon">🌟</div><div><h4>Acessibilidade</h4><p>Preços acessíveis e interface simples para todos os perfis.</p></div></div>
+        <div class="dif-item"><div class="dif-icon">🔒</div><div><h4>Segurança</h4><p>Dados protegidos e conformidade com LGPD e normas de saúde.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <span>InteraSaúde</span> — Todos os direitos reservados — <span>interaanalises.com.br</span></p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
